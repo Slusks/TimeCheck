@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Engineers {% endblock %}</h1>
+    <div style="width: 50%; margin: auto">
+        <!--{% for engineer in engineers %}
+            {% if loop.index % 2 == 0 %}
+                {% set bg_color = '#e6f9ff' %}
+            {% else %}
+                {% set bg_color = '#eee' %}
+        {% endif %}-->
+        <div style="padding: 10px; background-color: {{loop.cycle('#EEE', '#e6f9ff')}}; margin: 20px">
+            <p>#{{ loop.index }}</p>
+            <p style="font-size: 24px">{{ engineer }} is an engineer in our group</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
