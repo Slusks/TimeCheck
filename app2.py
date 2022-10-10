@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return render_template('index.html', utc_dt=datetime.datetime.utcnow())
+    return render_template('index.html', utc_dt=date_time_str)
 
 @app.route('/engineers/')
 def engineers():
@@ -27,3 +27,6 @@ def person():
                 "Sam",
                 "Ezekiel"]
     return render_template("person.html", persons=persons)
+
+now = datetime.datetime.now()
+date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")

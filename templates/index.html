@@ -5,5 +5,42 @@
     <h1>{% block title %} Index {% endblock %}</h1>
     <h1>Hello World!</h1>
     <h2>Welcome to FlaskApp!</h2>
-    <h3>{{ utc_dt }}</h3>
+    <h3>Current Time: {{ utc_dt }}</h3>
+    <div class="container">
+        <table>
+            <tr>
+            <th> Category</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+            </tr>
+            <tr>
+              <td><div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div></td>
+              <td><input type="number"> </td>
+              <td><input type="number"> </td>
+              <td><input type="number"> </td>
+              <td><input type="number"> </td>
+              <td><input type="number"> </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+              </tr>
+
+          </table> 
+    </div>
 {% endblock %}
