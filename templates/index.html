@@ -3,30 +3,33 @@
 
 {% block content %}
     <h1>{% block title %} Index {% endblock %}</h1>
-    <h1>Hello World!</h1>
-    <h2>Welcome to FlaskApp!</h2>
-    <h3>Current Time: {{ utc_dt }}</h3>
+    <h1>Time Tracking v0.0</h1>
+    <h2>Time tracking tool for engineering group</h2>
+    <h3>Current Time: {{ day }},  {{ utc_dt }}</h3>
+    <h3 id="test">Test:</h3>
     <div class="container">
-        <table>
+        <table id="myTable">
             <tr>
-            <th> Category</th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
+              <th></th>
+              <th> Category</th>
+              <th id="Monday">Monday</th>
+              <th id="Tuesday">Tuesday</th>
+              <th id="Wednesday">Wednesday</th>
+              <th id="Thursday">Thursday</th>
+              <th id="Friday">Friday</th>
             </tr>
             <tr>
-              <td><div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </div></td>
+              <td><button onClick ="newRow()"> + </button></td>
+              <td>
+                  <select id="category">
+                    <option value="Technical Documentation">Technical Documentation</option>
+                    <option value="Test Rigs">Test Rigs</option>
+                    <option value="Tool/Fixture/TestBox">Tool/Fixture/TestBox</option>
+                    <option value="Engineering Disposition">Engineering Disposition</option>
+                    <option value="External Communication">External Communication</option>
+                    <option value="Warranty">Warranty</option>
+                  </select>
+                </td>
               <td><input type="number"> </td>
               <td><input type="number"> </td>
               <td><input type="number"> </td>
@@ -42,5 +45,29 @@
               </tr>
 
           </table> 
+    <script>
+
+      let jsDay = {{ day | tojson }}
+      document.getElementById("test").innerText = jsDay
+
+      document.getElementById(jsDay).style.color = "lightblue"
+
+      function newRow(){
+        var table = document.getElementById("myTable")
+        var row = table.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        var cell = row.insertCell(0);
+        var cell = row.insertCell(1);
+        var cell = row.insertCell(2);
+        var cell = row.insertCell(3);
+        var cell = row.insertCell(4);
+
+        
+      }
+      
+      
+      
+
+    </script>
     </div>
 {% endblock %}

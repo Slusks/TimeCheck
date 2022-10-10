@@ -3,12 +3,13 @@
 from flask import Flask, abort, render_template
 from markupsafe import escape
 import datetime
+import calendar
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello():
-    return render_template('index.html', utc_dt=date_time_str)
+    return render_template('index.html', utc_dt=date_time_str, day=today)
 
 @app.route('/engineers/')
 def engineers():
@@ -30,3 +31,4 @@ def person():
 
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
+today = calendar.day_name[now.weekday()]
