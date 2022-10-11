@@ -5,8 +5,9 @@
     <h1>{% block title %} Index {% endblock %}</h1>
     <h1>Time Tracking v0.0</h1>
     <h2>Time tracking tool for engineering group</h2>
-    <h3>Current Time: {{ day }},  {{ utc_dt }}</h3>
+    <h3>Current Time: {{ data['day'] }},  {{ data['utc_dt'] }}</h3>
     <h3 id="test">Test:</h3>
+    <h3 id="test">{{data['file']}}</h3>
     <div class="container">
         <table id="myTable">
             <tr>
@@ -30,11 +31,11 @@
                     <option value="Warranty">Warranty</option>
                   </select>
                 </td>
-              <td><input type="number"> </td>
-              <td><input type="number"> </td>
-              <td><input type="number"> </td>
-              <td><input type="number"> </td>
-              <td><input type="number"> </td>
+              <td><input id="MondayInput" type="number"> </td>
+              <td><input id="TuesdayInput" type="number"> </td>
+              <td><input id="WednesdayInput" type="number"> </td>
+              <td><input id="ThursdayInput" type="number"> </td>
+              <td><input id="FridayInput" type="number"> </td>
             </tr>
             <tr>
                 <td> </td>
@@ -47,7 +48,7 @@
           </table> 
     <script>
 
-      let jsDay = {{ day | tojson }}
+      let jsDay = {{ data['day'] | tojson }}
       document.getElementById("test").innerText = jsDay
 
       document.getElementById(jsDay).style.color = "lightblue"
@@ -56,11 +57,28 @@
         var table = document.getElementById("myTable")
         var row = table.insertRow(-1);
         var cell1 = row.insertCell(0);
-        var cell = row.insertCell(0);
         var cell = row.insertCell(1);
         var cell = row.insertCell(2);
         var cell = row.insertCell(3);
         var cell = row.insertCell(4);
+        var cell = row.insertCell(5);
+
+        cell1.createElement('select');
+
+        var option = new Option()
+        var option = new Option()
+        var option = new Option()
+        var option = new Option()
+        var option = new Option()
+
+        "Technical Documentation"
+                   "Test Rigs"
+                    "Tool/Fixture/TestBox"
+                    "Engineering Disposition"
+                    "External Communication"
+                    "Warranty"
+
+
 
         
       }

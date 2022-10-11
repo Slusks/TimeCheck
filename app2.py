@@ -4,12 +4,19 @@ from flask import Flask, abort, render_template
 from markupsafe import escape
 import datetime
 import calendar
+import csv
+from pathlib import Path
 app = Flask(__name__)
 
 
 @app.route('/')
-def hello():
-    return render_template('index.html', utc_dt=date_time_str, day=today)
+def home():
+    data = {
+        'utc_dt':date_time_str,
+        'day':today,
+        'file':table
+    }
+    return render_template('index.html', data=data)
 
 @app.route('/engineers/')
 def engineers():
@@ -32,3 +39,17 @@ def person():
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
 today = calendar.day_name[now.weekday()]
+
+file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
+table={}
+with open(file) as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    line_count = 0
+    for row in csv_reader:
+        if line_count == 0:
+            table['headers'] = row
+            line_count +=1
+        else:
+            table[str(line_count)]=row
+            line_count +=1
+            continue
