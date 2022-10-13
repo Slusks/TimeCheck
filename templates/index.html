@@ -31,6 +31,17 @@
                     <option value="Warranty">Warranty</option>
                   </select>
                 </td>
+                {% for key, value in data['file'].items() %}
+                    <div>{{ key}} 
+                      {{value[0]}}
+                      {{value[1]}}
+                      {{value[2]}}
+                      {{value[3]}}
+                      {{value[4]}}
+                      {{value[5]}}            
+                      {{value[6]}}
+                      {{value[7]}}</div>
+                {% endfor %}
               <td><input id="MondayInput" type="number"> </td>
               <td><input id="TuesdayInput" type="number"> </td>
               <td><input id="WednesdayInput" type="number"> </td>

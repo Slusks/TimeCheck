@@ -9,6 +9,14 @@ from pathlib import Path
 app = Flask(__name__)
 
 
+#To start on development, need to enter the following information
+# set FLASK_APP=app2
+# set FLASK_ENV=developement
+
+#On work computer running the app requires the command, "python -m flask run"
+#On home computer running the app
+
+
 @app.route('/')
 def home():
     data = {
@@ -40,8 +48,16 @@ now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
 today = calendar.day_name[now.weekday()]
 
-file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
+work = True
+
+home_template = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
+work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
 table={}
+
+if work:
+    file = work_template
+else:
+    file = home_template
 with open(file) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
