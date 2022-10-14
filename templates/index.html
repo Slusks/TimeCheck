@@ -7,7 +7,45 @@
     <h2>Time tracking tool for engineering group</h2>
     <h3>Current Time: {{ data['day'] }},  {{ data['utc_dt'] }}</h3>
     <h3 id="test">Test:</h3>
+    <h3 id="user">user: {{ data['engineer'][0] }}</h3>
+    <h3 id="team">Team: {{ data['engineer'][1] }}</h3>
     <!--<h3 id="test">{{data['file']}}</h3>-->
+    <div class="container">
+      <div>
+      {% if data['engineer'][1] == "Shop" %}
+      <label>Category</label>
+      <select id="category">
+        {% for cat in data['jobs']['category'] %}
+        <option value= {{cat}}>{{cat}}</option>
+        <!--<option value="Test Rigs">Test Rigs</option>
+        <option value="Tool/Fixture/TestBox">Tool/Fixture/TestBox</option>
+        <option value="Engineering Disposition">Engineering Disposition</option>
+        <option value="External Communication">External Communication</option>
+        <option value="Warranty">Warranty</option>-->
+        {% endfor %}
+      </select>
+      </div>
+      {% else %}
+      <label>Project</label>
+      <select id="project">
+        {% for proj in data['jobs']['projects'] %}
+        <option value={{proj}}>{{proj}}</option>
+        <!--<option value="Test Rigs">Cargo Rig</option>
+        <option value="Tool/Fixture/TestBox">New Heli Rig</option>
+        <option value="Engineering Disposition">3D Printing</option>
+        <option value="External Communication">Nachos</option>-->
+        {% endfor %}
+      </select>
+      {% endif %}
+      <br>
+      <label>Hours</label>
+      <input id="HourInput" type="number">
+      <br>
+      <button>Submit</button>
+
+
+
+    </div>
     <h3>This Week: </h3>
     <div class="container">
         <table id="myTable">

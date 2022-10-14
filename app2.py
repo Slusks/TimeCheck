@@ -2,10 +2,13 @@
 
 from flask import Flask, abort, render_template
 from markupsafe import escape
+import getpass
 import datetime
 import calendar
 import csv
 from pathlib import Path
+import pandas as pd
+
 app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -24,7 +27,9 @@ def home():
     data = {
         'utc_dt':date_time_str,
         'day':today,
-        'file':table
+        'file':table,
+        'engineer':engineer,
+        'jobs':jobs
     }
     return render_template('index.html', data=data)
 
@@ -54,12 +59,16 @@ work = False
 
 home_template = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
 work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
+home_controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
+work_controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
 table={}
 
 if work:
     file = work_template
+    controller = work_controller
 else:
     file = home_template
+    controller = home_controller
 with open(file) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
@@ -71,3 +80,10 @@ with open(file) as csv_file:
             table[str(line_count)]=row
             line_count +=1
             continue
+
+with open(controller) as csv_controller:
+    df = pd.read_csv(csv_controller)
+    user = getpass.getuser()
+    engineer =  [user, df[df['Engineers']==user].Team.item()]
+    jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
+    print (jobs['category'])
