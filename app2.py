@@ -8,6 +8,8 @@ import csv
 from pathlib import Path
 app = Flask(__name__)
 
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
 
 #To start on development, need to enter the following information
 # set FLASK_APP=app2
@@ -48,7 +50,7 @@ now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
 today = calendar.day_name[now.weekday()]
 
-work = True
+work = False
 
 home_template = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
 work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')

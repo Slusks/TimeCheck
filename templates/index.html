@@ -7,10 +7,23 @@
     <h2>Time tracking tool for engineering group</h2>
     <h3>Current Time: {{ data['day'] }},  {{ data['utc_dt'] }}</h3>
     <h3 id="test">Test:</h3>
-    <h3 id="test">{{data['file']}}</h3>
+    <!--<h3 id="test">{{data['file']}}</h3>-->
+    <h3>This Week: </h3>
     <div class="container">
         <table id="myTable">
+          {% for key, value in data['file'].items() %}
             <tr>
+              <th>{{value[0]}}</th>
+              <th>{{value[1]}}</th>
+              <th>{{value[2]}}</th>
+              <th>{{value[3]}}</th>
+              <th>{{value[4]}}</th>
+              <th>{{value[5]}}</th>
+              <th>{{value[6]}}</th>
+              <th>{{value[7]}}</th>
+            </tr>
+          {% endfor %}
+           <!-- <tr>
               <th></th>
               <th> Category</th>
               <th id="Monday">Monday</th>
@@ -18,7 +31,7 @@
               <th id="Wednesday">Wednesday</th>
               <th id="Thursday">Thursday</th>
               <th id="Friday">Friday</th>
-            </tr>
+            </tr>-->
             <tr>
               <td><button onClick ="newRow()"> + </button></td>
               <td>
@@ -31,31 +44,12 @@
                     <option value="Warranty">Warranty</option>
                   </select>
                 </td>
-                {% for key, value in data['file'].items() %}
-                    <div>{{ key}} 
-                      {{value[0]}}
-                      {{value[1]}}
-                      {{value[2]}}
-                      {{value[3]}}
-                      {{value[4]}}
-                      {{value[5]}}            
-                      {{value[6]}}
-                      {{value[7]}}</div>
-                {% endfor %}
               <td><input id="MondayInput" type="number"> </td>
               <td><input id="TuesdayInput" type="number"> </td>
               <td><input id="WednesdayInput" type="number"> </td>
               <td><input id="ThursdayInput" type="number"> </td>
               <td><input id="FridayInput" type="number"> </td>
             </tr>
-            <tr>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-                <td> </td>
-              </tr>
-
           </table> 
     <script>
 
