@@ -3,6 +3,7 @@
 from flask import Flask, abort, render_template
 from markupsafe import escape
 import getpass
+import os
 import datetime
 import calendar
 import csv
@@ -55,7 +56,7 @@ now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
 today = calendar.day_name[now.weekday()]
 
-work = False
+work = True
 
 home_template = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
 work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
@@ -69,6 +70,7 @@ if work:
 else:
     file = home_template
     controller = home_controller
+    
 with open(file) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
@@ -83,7 +85,8 @@ with open(file) as csv_file:
 
 with open(controller) as csv_controller:
     df = pd.read_csv(csv_controller)
-    user = getpass.getuser()
-    engineer =  [user, df[df['Engineers']==user].Team.item()]
+    user = os.getlogin()#getpass.getuser()
+    engineer = [user, df[df['Engineers']==user].Team.item()]
+    #print(engineer)
     jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
-    print (jobs['category'])
+    #print (jobs['category'])
