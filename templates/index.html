@@ -10,13 +10,16 @@
     <h3 id="user">user: {{ data['engineer'][0] }}</h3>
     <h3 id="team">Team: {{ data['engineer'][1] }}</h3>
     <!--<h3 id="test">{{data['file']}}</h3>-->
+
+
     <div class="container">
+      <form action="{{ url_for("home")}}" method="post" name="selection">
       <div>
       {% if data['engineer'][1] == "Shop" %}
       <label>Category</label>
-      <select id="category">
+      <select name="CategoryInput" id="category">
         {% for cat in data['jobs']['category'] %}
-        <option value= {{cat}}>{{cat}}</option>
+        <option  value= "{{cat}}">{{cat}}</option>
         <!--<option value="Test Rigs">Test Rigs</option>
         <option value="Tool/Fixture/TestBox">Tool/Fixture/TestBox</option>
         <option value="Engineering Disposition">Engineering Disposition</option>
@@ -29,7 +32,7 @@
       <label>Project</label>
       <select id="project">
         {% for proj in data['jobs']['projects'] %}
-        <option value={{proj}}>{{proj}}</option>
+        <option name="ProjectInput" value={{proj}}>{{proj}}</option>
         <!--<option value="Test Rigs">Cargo Rig</option>
         <option value="Tool/Fixture/TestBox">New Heli Rig</option>
         <option value="Engineering Disposition">3D Printing</option>
@@ -39,13 +42,15 @@
       {% endif %}
       <br>
       <label>Hours</label>
-      <input id="HourInput" type="number">
-      <br>
-      <button>Submit</button>
+      <input id="HourInput" name="HourInput" type="number">
+      <br><br>
+      <button type="submit">Submit</button>
+    </form>
 
 
 
     </div>
+    <br>
     <h3>This Week: </h3>
     <div class="container">
         <table id="myTable">

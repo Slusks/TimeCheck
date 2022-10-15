@@ -1,6 +1,6 @@
 #Original test file from: https://www.digitalocean.com/community/tutorials/how-to-use-templates-in-a-flask-application
 
-from flask import Flask, abort, render_template
+from flask import Flask, abort, render_template, request
 from markupsafe import escape
 import getpass
 import datetime
@@ -22,7 +22,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 #On home computer running the app
 
 
-@app.route('/')
+@app.route('/', methods=["GET","POST"])
 def home():
     data = {
         'utc_dt':date_time_str,
@@ -31,6 +31,12 @@ def home():
         'engineer':engineer,
         'jobs':jobs
     }
+    if request.method == "POST":
+        subject = request.form.get("CategoryInput")
+        hour = request.form.get("HourInput")
+        #content = request.form["CategoryInput"]
+        #hour = request.form["HourInput"]
+        print("output: ",subject, hour)
     return render_template('index.html', data=data)
 
 @app.route('/engineers/')
@@ -87,3 +93,7 @@ with open(controller) as csv_controller:
     engineer =  [user, df[df['Engineers']==user].Team.item()]
     jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
     print (jobs['category'])
+
+
+if __name__=='__main__':
+   app.run()
