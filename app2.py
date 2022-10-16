@@ -34,10 +34,12 @@ def home():
     }
     if request.method == "POST":
         subject = request.form.get("CategoryInput")
+        day = request.form.get("DayInput")
         hour = request.form.get("HourInput")
-        #content = request.form["CategoryInput"]
-        #hour = request.form["HourInput"]
-        print("output: ",subject, hour)
+        comment = request.form.get("commentInput")
+        time =datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
+        
+        print("output: ", subject, day, hour, comment, time)
     return render_template('index.html', data=data)
 
 @app.route('/engineers/')
@@ -62,7 +64,7 @@ now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
 today = calendar.day_name[now.weekday()]
 
-work = True
+
 
 home_template = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
 work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
@@ -70,12 +72,14 @@ home_controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column
 work_controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
 table={}
 
-if work:
-    file = work_template
-    controller = work_controller
-else:
+if home_controller:
     file = home_template
     controller = home_controller
+else:
+    file = work_template
+    controller = work_controller
+
+
     
 with open(file) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
