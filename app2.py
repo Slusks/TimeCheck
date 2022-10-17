@@ -71,14 +71,15 @@ work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
 home_controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
 work_controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
 table={}
+work = True
 
-if home_controller:
-    file = home_template
-    controller = home_controller
-else:
+
+if work:
     file = work_template
     controller = work_controller
-
+else:
+    file = home_template
+    controller = home_controller
 
     
 with open(file) as csv_file:
