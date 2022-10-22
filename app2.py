@@ -70,7 +70,7 @@ def timekeeper():
             'engineer':engineer,
             'jobs':jobs,
             'dates':dates}
-        return render_template("person.html", timekeeperdata=timekeeperdata)
+        return render_template("timekeeper.html", timekeeperdata=timekeeperdata)
 
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
@@ -105,11 +105,13 @@ with open(file2) as csv_file:
     line_count = 0
     for row in csv_reader:
         if line_count == 0:
-            table['headers'] = row
+            table['headers'] = row[1:]
             line_count +=1
         else:
-            table[str(line_count)]=row
+            table[str(line_count)]=row[1:]
+            
             line_count +=1
+    
             
 
 with open(controller) as csv_controller:
