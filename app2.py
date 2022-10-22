@@ -36,15 +36,15 @@ def home():
     if request.method == "POST":
         
         subject = request.form.get("CategoryInput")
-        dayWorked = request.form.get("DayInput")
-        hour = request.form.get("HourInput")
+        dateWorked = request.form.get("workedDate")
+        hours = request.form.get("HourInput")
         comment = request.form.get("commentInput")
         timestamp =datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
-        payload = {"subject": subject,
-                    "dayWorked": dayWorked,
-                    "hour": hour,
+        payload = {"timestamp": timestamp,
+                    "subject": subject,
+                    "dateWorked": dateWorked,
+                    "hours": hours,
                     "comment": comment,
-                    "timestamp": timestamp,
                     }
         update_csv(file2, payload)
         
@@ -65,14 +65,18 @@ def timekeeper():
         timekeeperdata = {
             'utc_dt':date_time_str,
             'day':today,
+            'month':month,
             'file':table,
             'engineer':engineer,
-            'jobs':jobs}
+            'jobs':jobs,
+            'dates':dates}
         return render_template("person.html", timekeeperdata=timekeeperdata)
 
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
 today = calendar.day_name[now.weekday()]
+month = calendar.month_name[now.weekday()]
+dates = datetime.date#calendar.weekheader(10)
 
 
 
@@ -96,7 +100,7 @@ else:
     controller = home_controller
 
     
-with open(file) as csv_file:
+with open(file2) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
     for row in csv_reader:
@@ -116,22 +120,22 @@ with open(controller) as csv_controller:
     jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
 
 
-with open(file2) as csv_file2:
-    csv_reader2 = csv.reader(csv_file2, delimiter=',')
-    line_count = 0
-    for row in csv_reader2:
-        if line_count == 0:
-            table['headers'] = row
-            line_count +=1
-        else:
-            table[str(line_count)]=row
-            line_count +=1
+#with open(file2) as csv_file2:
+#    csv_reader2 = csv.reader(csv_file2, delimiter=',')
+#   line_count = 0
+#    for row in csv_reader2:
+#        if line_count == 0:
+#            table['headers'] = row
+#            line_count +=1
+#        else:
+#            table[str(line_count)]=row
+#            line_count +=1
             
 
 def update_csv(filename, data):
     print("updating CSV")
     field_names = list(data.keys())
-    with open(filename, 'w', newline="") as file_object:
+    with open(filename, 'a', newline="") as file_object:
         dictwriter_object= DictWriter(file_object, fieldnames=field_names)
         dictwriter_object.writerow(data)
         file_object.close()
