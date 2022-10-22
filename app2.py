@@ -11,6 +11,7 @@ from csv import DictWriter
 from pathlib import Path
 import pandas as pd
 
+
 app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -69,7 +70,8 @@ def timekeeper():
             'file':table,
             'engineer':engineer,
             'jobs':jobs,
-            'dates':dates}
+            'dates':dates,
+            'aggFile': aggFunct(file2)}
         return render_template("timekeeper.html", timekeeperdata=timekeeperdata)
 
 now = datetime.datetime.now()
@@ -109,7 +111,6 @@ with open(file2) as csv_file:
             line_count +=1
         else:
             table[str(line_count)]=row[1:]
-            
             line_count +=1
     
             
@@ -142,6 +143,13 @@ def update_csv(filename, data):
         dictwriter_object.writerow(data)
         file_object.close()
     print(data)
+
+#I want to create a function that will aggregate the project/category time for a given engineer
+def aggFunct(filename):
+    df = pd.read_csv(filename)
+    df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
+    print(df_grouped)
+    return df_grouped
 
 
 if __name__=='__main__':
