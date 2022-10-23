@@ -83,7 +83,8 @@ dates = datetime.date#calendar.weekheader(10)
 
 
 home_template = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
-work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
+laptop_template = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template.csv')
+work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')''
 home_template2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
 work_template2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
 home_controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
