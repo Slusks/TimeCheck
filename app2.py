@@ -20,6 +20,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 #To start on development, need to enter the following information
 # set FLASK_APP=app2
 # set FLASK_ENV=developement
+# set FLASK_DEBUG=True
 
 #On work computer running the app requires the command, "python -m flask run"
 #On home computer running the app
@@ -83,24 +84,32 @@ dates = datetime.date#calendar.weekheader(10)
 
 
 home_template = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
-laptop_template = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template.csv')
-work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')''
+laptop_template = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
+work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
+
 home_template2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
 work_template2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
+
 home_controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
 work_controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
+laptop_controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
+
 table={}
-work = False
+computers = ['home', 'laptop', 'work']
+location = computers[1]
 
 
-if work:
+if location == 'work' :
     file = work_template
     file2 = work_template2
     controller = work_controller
-else:
+elif location == 'home':
     file = home_template
     file2 = home_template2
     controller = home_controller
+elif location =='laptop':
+    file = file2 = laptop_template
+    controller = laptop_controller
 
     
 with open(file2) as csv_file:
@@ -119,21 +128,11 @@ with open(file2) as csv_file:
 with open(controller) as csv_controller:
     df = pd.read_csv(csv_controller)
     user = os.getlogin()#getpass.getuser()
+    #print("user", user)
     engineer = [user, df[df['Engineers']==user].Team.item()]
     #print(engineer)
     jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
 
-
-#with open(file2) as csv_file2:
-#    csv_reader2 = csv.reader(csv_file2, delimiter=',')
-#   line_count = 0
-#    for row in csv_reader2:
-#        if line_count == 0:
-#            table['headers'] = row
-#            line_count +=1
-#        else:
-#            table[str(line_count)]=row
-#            line_count +=1
             
 
 def update_csv(filename, data):
