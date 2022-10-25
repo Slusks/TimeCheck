@@ -5,6 +5,7 @@ from markupsafe import escape
 import getpass
 import os
 import datetime
+from datetime import timedelta
 import calendar
 import csv
 from csv import DictWriter
@@ -73,6 +74,7 @@ def timekeeper():
             'jobs':jobs,
             'dates':dates,
             'aggFile': aggFunct(file2)}
+        thisWeek()
         return render_template("timekeeper.html", timekeeperdata=timekeeperdata)
 
 now = datetime.datetime.now()
@@ -150,6 +152,31 @@ def aggFunct(filename):
     df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
     print(df_grouped)
     return df_grouped
+
+def thisWeek():
+    Dict = {}
+    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
+        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
+    print('This week is:')
+    print(date_time_str)
+    print(today)
+    print(datetime.date.today())
+    print(now.isocalendar())
+
+    week = Dict[now.isocalendar()]
+    print(week)
+
+    
+def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get-the-current-week-using-python
+    """This code was provided in the previous answer! It's not mine!"""
+    d = datetime.date(year, 1, 1)                    # January 1st                                                          
+    d += timedelta(days = 6 - d.weekday())  # First Sunday                                                         
+    while d.year == year:
+        yield d
+        d += timedelta(days = 7)
+
+
+
 
 
 if __name__=='__main__':
