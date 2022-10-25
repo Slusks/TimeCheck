@@ -73,8 +73,12 @@ def timekeeper():
             'engineer':engineer,
             'jobs':jobs,
             'dates':dates,
-            'aggFile': aggFunct(file2)}
-        thisWeek()
+            'totalByCategory': aggFunct(file2, ['all']),
+            #'totalByWeek': aggFunct(file2, thisWeek() )
+            'weekTable': thisWeek(file2)
+            }
+        
+
         return render_template("timekeeper.html", timekeeperdata=timekeeperdata)
 
 now = datetime.datetime.now()
@@ -98,7 +102,7 @@ laptop_controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[1]
+location = computers[0]
 
 
 if location == 'work' :
@@ -147,24 +151,45 @@ def update_csv(filename, data):
     print(data)
 
 #I want to create a function that will aggregate the project/category time for a given engineer
-def aggFunct(filename):
+def aggFunct(filename, week):
     df = pd.read_csv(filename)
-    df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
-    print(df_grouped)
+    if len(week) > 1:
+        print("week")
+        this_week = df.loc[df['dateworked'].isin(week)]
+        print(this_week)
+        df_grouped = this_week.groupby(by="category")["hours"].sum().to_dict()
+    else:
+        df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
+        print("all", df_grouped)
     return df_grouped
 
-def thisWeek():
+def thisWeek(filename):
     Dict = {}
     for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
         Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
-    print('This week is:')
-    print(date_time_str)
-    print(today)
-    print(datetime.date.today())
-    print(now.isocalendar())
+    weekNum = now.isocalendar()[1]
+    print(weekNum)
+    week = Dict[weekNum]
+    print('thisWeek',week)
+    df = pd.read_csv(filename, index_col=None)
+    this_week = df.loc[df['dateworked'].isin(week)].values
+    print (this_week)
+    days=[]
+    categories={}
+    for i in this_week:
+        days.append(i[2])
+        categories[i[1]]=i[3]
+    print("days: ", days)
+    print("categories: ", categories)
+    this_week = pd.DataFrame.from_dict(categories, orient="index", columns=week)
+    print(this_week)
+    return this_week
+    
 
-    week = Dict[now.isocalendar()]
-    print(week)
+
+    
+
+
 
     
 def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get-the-current-week-using-python
