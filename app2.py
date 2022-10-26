@@ -102,7 +102,7 @@ laptop_controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[2]
 
 
 if location == 'work' :
@@ -173,7 +173,7 @@ def thisWeek(filename):
     print('thisWeek',week)
     df = pd.read_csv(filename, index_col=None)
     this_week = df.loc[df['dateworked'].isin(week)].values
-    print (this_week)
+    print ("this_week" ,this_week)
     days=[]
     categories={}
     for i in this_week:
@@ -181,7 +181,7 @@ def thisWeek(filename):
         categories[i[1]]=i[3]
     print("days: ", days)
     print("categories: ", categories)
-    this_week = pd.DataFrame.from_dict(categories, orient="index", columns=week)
+    #this_week = pd.DataFrame.from_dict(categories, orient="index", columns=week)
     print(this_week)
     return this_week
     
