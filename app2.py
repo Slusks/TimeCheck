@@ -75,7 +75,7 @@ def timekeeper():
             'dates':dates,
             'totalByCategory': aggFunct(file2, ['all']),
             #'totalByWeek': aggFunct(file2, thisWeek() )
-            'weekTable': thisWeek(file2)
+            'weekTable': thisWeek(file2) #this week is a list of lists where the order is [category, date, sum of hours]
             }
         
 
@@ -89,35 +89,25 @@ dates = datetime.date#calendar.weekheader(10)
 
 
 
-home_template = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
-laptop_template = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
-work_template = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
-
-home_template2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
-work_template2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
-
-home_controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
-work_controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
-laptop_controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
 
 table={}
 computers = ['home', 'laptop', 'work']
 location = computers[2]
 
+if Path(r'C:\Users\sam'):
+    file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
+    file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
+    controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
+elif Path(r'C:\Users\samsl'):
+    file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
+    controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
+else:
+    file = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
+    file2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
+    controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
 
-if location == 'work' :
-    file = work_template
-    file2 = work_template2
-    controller = work_controller
-elif location == 'home':
-    file = home_template
-    file2 = home_template2
-    controller = home_controller
-elif location =='laptop':
-    file = file2 = laptop_template
-    controller = laptop_controller
 
-    
+
 with open(file2) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
     line_count = 0
@@ -172,18 +162,29 @@ def thisWeek(filename):
     week = Dict[weekNum]
     print('thisWeek',week)
     df = pd.read_csv(filename, index_col=None)
-    this_week = df.loc[df['dateworked'].isin(week)].values
-    print ("this_week" ,this_week)
-    days=[]
-    categories={}
-    for i in this_week:
-        days.append(i[2])
-        categories[i[1]]=i[3]
-    print("days: ", days)
-    print("categories: ", categories)
+    this_week = df.loc[df['dateworked'].isin(week)]#.values
+
+    #This is creating a dictionary with the category and date and then the sum of hours worked on that date
+    df_grouped = this_week.groupby(by=["category", "dateworked"])["hours"].sum().to_dict()
+    print("df_grouped", df_grouped)
+    #df_grouped2 and 3 aren't both necessary, just working on how I want to get the data organized. Probably will drop group 2.
+    #thinking I want something like { date: [Category, hours]} as my datastructure, but not sure how well that will work in pandas
+    # Want to play around with that structure.
+    df_grouped2 = []
+    df_grouped3 = {}
+    for key, value in df_grouped.items():
+        df_grouped2.append([key[0], key[1], value])
+    print(df_grouped2)
+    for key, value in df_grouped.items():
+        df_grouped2.append([key[0], key[1], value])
+    for key, value in df_grouped.items():
+        if key[1] in df_grouped3.keys():
+            df_grouped3[key[1]].append([key[0], value])
+        else:
+            df_grouped3[key[1]]=[[key[0], value]]
+    
     #this_week = pd.DataFrame.from_dict(categories, orient="index", columns=week)
-    print(this_week)
-    return this_week
+    return df_grouped2
     
 
 

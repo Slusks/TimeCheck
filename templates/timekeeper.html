@@ -6,10 +6,15 @@
 <table id="myTable">
   {% for i in timekeeperdata['weekTable'] %}
     <tr>
-      <td>{{i[2]}}</td>
+      <th>      </th>
+      <th> {{i[1]}}</th>
     </tr>
     <tr>
-      <th>{{i[3]}}</th>
+      <td>{{i[0]}}</td>
+      <td>{{i[2]}}</td>
+    </tr>
+ 
+
     </tr>
   {% endfor %}
   </table> 
