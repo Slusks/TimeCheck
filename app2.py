@@ -94,17 +94,32 @@ table={}
 computers = ['home', 'laptop', 'work']
 location = computers[2]
 
-if Path(r'C:\Users\sam'):
-    file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
-    file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
-    controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
-elif Path(r'C:\Users\samsl'):
-    file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
-    controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
-else:
-    file = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
-    file2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
-    controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
+
+file = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
+file2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
+controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
+
+"ctrl + / to comment a block"
+# if Path(r'C:\Users\sam'):
+#     try:
+#         file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
+#         file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
+#         controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
+#     except:
+#         print("not home")
+#         pass
+# elif Path(r'C:\Users\samsl'):
+#     try:
+#         file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
+#         controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
+#     except:
+#         print("not on laptop")
+#         pass
+# else:
+#     print("at work")
+#     file = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
+#     file2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
+#     controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
 
 
 
