@@ -37,4 +37,10 @@
     {% endfor %}
     </table> 
   </div>
+
+  <h2>Full Template Output</h2>
+  {% for table in tables %}
+    {{titles[loop.index]}}
+    {{ table|safe }}
+  {% endfor %}
 {% endblock %}

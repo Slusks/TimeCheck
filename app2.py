@@ -75,11 +75,12 @@ def timekeeper():
             'dates':dates,
             'totalByCategory': aggFunct(file2, ['all']),
             #'totalByWeek': aggFunct(file2, thisWeek() )
-            'weekTable': thisWeek(file2) #this week is a list of lists where the order is [category, date, sum of hours]
+            'weekTable': thisWeek(file2), #this week is a list of lists where the order is [category, date, sum of hours]
+            'fullTable': full_hours
             }
         
 
-        return render_template("timekeeper.html", timekeeperdata=timekeeperdata)
+        return render_template("timekeeper.html", timekeeperdata=timekeeperdata, tables=[full_hours.to_html(classes='data')], titles=full_hours.columns.values)
 
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
@@ -92,36 +93,34 @@ dates = datetime.date#calendar.weekheader(10)
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[2]
+location = computers[1]
 
 
-file = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
-file2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
-controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
+
 
 "ctrl + / to comment a block"
-# if Path(r'C:\Users\sam'):
-#     try:
-#         file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
-#         file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
-#         controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
-#     except:
-#         print("not home")
-#         pass
-# elif Path(r'C:\Users\samsl'):
-#     try:
-#         file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
-#         controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
-#     except:
-#         print("not on laptop")
-#         pass
-# else:
-#     print("at work")
-#     file = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
-#     file2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
-#     controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
+if location == "home":
+    try:
+        file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
+        file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
+        controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
+    except:
+        print("not home")
+        pass
+elif location =="laptop":
+    try:
+        file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
+        controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
+    except:
+        print("not on laptop")
+        pass
+else:
+    print("at work")
+    file = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
+    file2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
+    controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
 
-
+full_hours = pd.read_csv(file2)
 
 with open(file2) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
