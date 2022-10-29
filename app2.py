@@ -74,13 +74,11 @@ def timekeeper():
             'jobs':jobs,
             'dates':dates,
             'totalByCategory': aggFunct(file2, ['all']),
-            #'totalByWeek': aggFunct(file2, thisWeek() )
-            'weekTable': thisWeek(file2), #this week is a list of lists where the order is [category, date, sum of hours]
-            'fullTable': full_hours
             }
-        
+        weekTable = thisWeek(file2)
 
-        return render_template("timekeeper.html", timekeeperdata=timekeeperdata, tables=[full_hours.to_html(classes='data')], titles=full_hours.columns.values)
+        return render_template("timekeeper.html", timekeeperdata=timekeeperdata, 
+        tables=[full_hours.to_html(classes='data'), weekTable.to_html(classes='data')], titles=[full_hours.columns.values, weekTable.columns.values])
 
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
@@ -93,7 +91,7 @@ dates = datetime.date#calendar.weekheader(10)
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[1]
+location = computers[0]
 
 
 
@@ -175,30 +173,20 @@ def thisWeek(filename):
     print(weekNum)
     week = Dict[weekNum]
     print('thisWeek',week)
-    df = pd.read_csv(filename, index_col=None)
+    df = pd.read_csv(filename)
+    #print("df", df)
     this_week = df.loc[df['dateworked'].isin(week)]#.values
 
-    #This is creating a dictionary with the category and date and then the sum of hours worked on that date
-    df_grouped = this_week.groupby(by=["category", "dateworked"])["hours"].sum().to_dict()
-    print("df_grouped", df_grouped)
-    #df_grouped2 and 3 aren't both necessary, just working on how I want to get the data organized. Probably will drop group 2.
-    #thinking I want something like { date: [Category, hours]} as my datastructure, but not sure how well that will work in pandas
-    # Want to play around with that structure.
-    df_grouped2 = []
-    df_grouped3 = {}
-    for key, value in df_grouped.items():
-        df_grouped2.append([key[0], key[1], value])
-    print(df_grouped2)
-    for key, value in df_grouped.items():
-        df_grouped2.append([key[0], key[1], value])
-    for key, value in df_grouped.items():
-        if key[1] in df_grouped3.keys():
-            df_grouped3[key[1]].append([key[0], value])
-        else:
-            df_grouped3[key[1]]=[[key[0], value]]
-    
-    #this_week = pd.DataFrame.from_dict(categories, orient="index", columns=week)
-    return df_grouped2
+    #this_week_formatted = this_week.pivot(index="category", values="hours", columns="dateworked")
+    this_week_formatted = this_week.groupby(['category','dateworked']).hours.sum().unstack().fillna("")
+    for i in week:
+        if i not in this_week_formatted.columns:
+            this_week_formatted[i]= ""
+    this_week_formatted = this_week_formatted.reindex(columns=week)
+
+    #print(this_week_formatted)
+    return this_week_formatted
+
     
 
 
