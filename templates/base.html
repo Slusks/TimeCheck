@@ -96,6 +96,26 @@
             #pandas{
                 display:flex;
                 max-width: 100%;
+                padding-bottom: 5px;
+            }
+
+            #pandas tbody, td, tfoot, th, thead, tr{
+                text-align:center;
+                border-width:0.5px;
+            }
+
+            #pandas table thead tr th:first-child{
+                color:hsl(218, 0%, 18%);
+                border-color: #ccc;
+            }
+
+            #pandas table thead tr th:first-child:hover{
+                color:hsl(10.22, 70%, 30%)
+            }
+
+            #pandas table thead tr:nth-child(2) th:first-child{
+                display:none;
+                height:0px;
             }
 
 

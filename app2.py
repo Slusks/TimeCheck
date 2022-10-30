@@ -85,6 +85,7 @@ date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
 today = calendar.day_name[now.weekday()]
 month = calendar.month_name[now.weekday()]
 dates = datetime.date#calendar.weekheader(10)
+days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
 
 
@@ -183,7 +184,12 @@ def thisWeek(filename):
         if i not in this_week_formatted.columns:
             this_week_formatted[i]= ""
     this_week_formatted = this_week_formatted.reindex(columns=week)
-
+    column_dict = {}
+    for i in days:
+        ind = days.index(i)
+        column_dict.update({week[ind]:i+'\n'+week[ind][5:]})
+    print(column_dict)
+    this_week_formatted.rename(columns=column_dict, inplace=True)
     #print(this_week_formatted)
     return this_week_formatted
 
