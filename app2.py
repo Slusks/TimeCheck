@@ -92,7 +92,7 @@ days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[1]
+location = computers[0]
 
 
 
@@ -158,7 +158,7 @@ def aggFunct(filename, week):
     df = pd.read_csv(filename)
     if len(week) > 1:
         print("week")
-        this_week = df.loc[df['dateworked'].isin(week)]
+        this_week = df.loc[df['dateworked'].isin(week)] #selecting records for the given week
         print(this_week)
         df_grouped = this_week.groupby(by="category")["hours"].sum().to_dict()
     else:
@@ -170,15 +170,20 @@ def thisWeek(filename):
     Dict = {}
     for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
         Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
-    weekNum = now.isocalendar()[1]
-    print(weekNum)
-    week = Dict[weekNum]
-    print('thisWeek',week)
-    df = pd.read_csv(filename)
-    #print("df", df)
-    this_week = df.loc[df['dateworked'].isin(week)]#.values
+    if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
+        weekNum = now.isocalendar()[1]+1
+    else:
+        weekNum = now.isocalendar()[1]
 
-    #this_week_formatted = this_week.pivot(index="category", values="hours", columns="dateworked")
+
+    print("WeekNum:", weekNum)
+   
+    week = Dict[weekNum]
+
+    df = pd.read_csv(filename)
+
+    this_week = df.loc[df['dateworked'].isin(week)]
+
     this_week_formatted = this_week.groupby(['category','dateworked']).hours.sum().unstack().fillna("")
     for i in week:
         if i not in this_week_formatted.columns:
@@ -190,7 +195,6 @@ def thisWeek(filename):
         column_dict.update({week[ind]:i+'\n'+week[ind][5:]})
     print(column_dict)
     this_week_formatted.rename(columns=column_dict, inplace=True)
-    #print(this_week_formatted)
     return this_week_formatted
 
 
