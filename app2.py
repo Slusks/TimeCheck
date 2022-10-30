@@ -91,7 +91,7 @@ dates = datetime.date#calendar.weekheader(10)
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[1]
 
 
 
@@ -186,12 +186,6 @@ def thisWeek(filename):
 
     #print(this_week_formatted)
     return this_week_formatted
-
-    
-
-
-    
-
 
 
     
