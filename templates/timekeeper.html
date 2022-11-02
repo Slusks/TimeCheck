@@ -12,8 +12,9 @@
 
   
   <button class="accordion">Total By Category</button>
-  <div class="panel">
+  <div class="panel" id="tableContainer">
     <h2>Total by Category:</h2>
+    <div id="pandas">
     <table id="myTable">
       <tr>
         <th>Category</th>
@@ -26,6 +27,21 @@
         </tr>
       {% endfor %}
       </table> 
+     
+      <div id="timekeeperRadio" >
+        <h5>Table Interval:</h5>
+        <form action="{{ url_for("home")}}" method="post"></form>
+        <input type="radio" id="weekly" name="aggregate" value="week">
+        <label for="weekly"> Week</label><br>
+        <input type="radio" id="monthly" name="aggregate" value="month" checked>
+        <label for="monthly" checked> Month</label><br>  
+        <input type="radio" id="annually" name="aggregate" value="year">
+        <label for="annually"> Year</label><br><br>
+        <br>
+        <input style="margin-left:10px;" type="submit" value="Submit">
+      </form>
+      </div>
+      </div>
   </div>
   
   <button class="accordion">Full Time</button>

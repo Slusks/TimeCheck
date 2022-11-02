@@ -92,7 +92,7 @@ days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[1]
 
 
 
