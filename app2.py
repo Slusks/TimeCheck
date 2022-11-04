@@ -48,6 +48,7 @@ def home():
                     "dateWorked": dateWorked,
                     "hours": hours,
                     "comment": comment,
+                    "engineer":engineer[0]
                     }
         update_csv(file2, payload)
         
@@ -63,26 +64,43 @@ def engineers():
                 "Ezekiel"]
     return render_template("engineers.html", engineers=engineers)
 
-@app.route('/timekeeper/')
+@app.route('/timekeeper/', methods=["GET","POST"])
 def timekeeper():
-        timekeeperdata = {
-            'utc_dt':date_time_str,
-            'day':today,
-            'month':month,
-            'file':table,
-            'engineer':engineer,
-            'jobs':jobs,
-            'dates':dates,
-            'totalByCategory': aggFunct(file2, ['all']),
-            }
-        weekTable = thisWeek(file2)
+    timekeeperdata = {
+        'utc_dt':date_time_str,
+        'day':today,
+        'month':month,
+        'file':table,
+        'engineer':engineer,
+        'jobs':jobs,
+        'dates':dates,
+        'totalByCategory': aggFunct(file2, ['all']),
+        }
+    weekTable = thisWeek(file2)
 
-        return render_template("timekeeper.html", timekeeperdata=timekeeperdata, 
-        tables=[full_hours.to_html(classes='data'), weekTable.to_html(classes='data')], titles=[full_hours.columns.values, weekTable.columns.values])
+    if request.method == "POST":
+        time_period = request.form.get("aggregate")
+        print("time_period", time_period)
+        if time_period == "week":
+            time = thisWeek(file2)
+            print("WEEK: ", aggFunct(file2, time))
+            return aggFunct(file2, time)
+        elif time_period == "month":
+            thismonth = getMonth()
+            print("MONTH: ", aggFunct(file2, thismonth))
+            return aggFunct(file2, thismonth)
+        else:
+            year = getYear()
+            print("YEAR: ", aggFunct(file2, year))
+            return aggFunct(file2, year)
+
+
+    return render_template("timekeeper.html", timekeeperdata=timekeeperdata, 
+    tables=[full_hours.to_html(classes='data'), weekTable.to_html(classes='data')], titles=[full_hours.columns.values, weekTable.columns.values])
 
 now = datetime.datetime.now()
-date_time_str = now.strftime("%m-%d-%Y %H:%M:%S")
-today = calendar.day_name[now.weekday()]
+date_time_str = now.strftime("%m-%d-%Y %H:%M:%S") # returns todays date
+today = calendar.day_name[now.weekday()] # returns today
 month = calendar.month_name[now.weekday()]
 dates = datetime.date#calendar.weekheader(10)
 days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
@@ -92,7 +110,7 @@ days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[1]
+location = computers[0]
 
 
 
@@ -154,13 +172,13 @@ def update_csv(filename, data):
     print(data)
 
 #I want to create a function that will aggregate the project/category time for a given engineer
-def aggFunct(filename, week):
+def aggFunct(filename, time):
     df = pd.read_csv(filename)
-    if len(week) > 1:
-        print("week")
-        this_week = df.loc[df['dateworked'].isin(week)] #selecting records for the given week
-        print(this_week)
-        df_grouped = this_week.groupby(by="category")["hours"].sum().to_dict()
+    if len(time) > 1:
+        print("time", time)
+        this_time = df.loc[df['dateworked'].isin(time)] #selecting records for the given week
+        print(this_time)
+        df_grouped = this_time.groupby(by="category")["hours"].sum().to_dict()
     else:
         df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
         print("all", df_grouped)
@@ -174,16 +192,10 @@ def thisWeek(filename):
         weekNum = now.isocalendar()[1]+1
     else:
         weekNum = now.isocalendar()[1]
-
-
     print("WeekNum:", weekNum)
-   
     week = Dict[weekNum]
-
     df = pd.read_csv(filename)
-
     this_week = df.loc[df['dateworked'].isin(week)]
-
     this_week_formatted = this_week.groupby(['category','dateworked']).hours.sum().unstack().fillna("")
     for i in week:
         if i not in this_week_formatted.columns:
@@ -199,6 +211,46 @@ def thisWeek(filename):
 
 
     
+
+
+def getWeek(): #this should return a list of the days in the week
+    Dict = {}
+    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
+        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
+    if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
+        weekNum = now.isocalendar()[1]+1
+    else:
+        weekNum = now.isocalendar()[1]
+    week= Dict[weekNum]
+    return week
+
+def getMonth():
+    Dict = {}
+    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
+        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
+    if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
+        weekNum = now.isocalendar()[1]+1
+    else:
+        weekNum = now.isocalendar()[1]
+    month_val = weekNum[Dict][0][5:7]
+    year = weekNum[Dict][0][:4]
+    num_days = calendar.monthrange(year, month)[1]
+    month = [datetime.date(year, month_val, day).strftime("%Y-%m-%d") for day in range(1, num_days+1)]
+    return month
+
+
+def getYear():
+    Dict = {}
+    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
+        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
+    year = []
+    for i in Dict.values():
+        for j in i:
+            year.append(j)
+    return j
+
+
+
 def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get-the-current-week-using-python
     """This code was provided in the previous answer! It's not mine!"""
     d = datetime.date(year, 1, 1)                    # January 1st                                                          
@@ -206,7 +258,6 @@ def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get
     while d.year == year:
         yield d
         d += timedelta(days = 7)
-
 
 
 
