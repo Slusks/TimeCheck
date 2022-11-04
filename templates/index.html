@@ -11,10 +11,10 @@
     <h3 id="team">Team: {{ data['engineer'][1] }}</h3>
 
 
-    <!--<button style="display: flex; float:left; margin-left:10%; margin-top: 1%;" onclick="newRow()">Add</button>-->
+
   <!-- I want to copy this whole div but make the id something like form-container2, 3, 4, etc.-->
       <div class="container" id="form-container" style="display:flexbox;">
-        <form action="{{ url_for("home")}}" method="post" name="selection">
+        <form action="{{ url_for('home')}}" method="post" name="selection">
         <div>
         {% if data['engineer'][1] == "Shop" %}
         <div style="display: flex; float:left;">
@@ -41,17 +41,6 @@
             value="{{data['utc_dt'][0:10]}}">
         </div>
         
-        <!--<div style="display: flex; padding-left: 5%;">
-          <label style="margin-right: 2%;">Day: </label>
-          <select name="DayInput" id="day">
-            <option id= "Monday"  value= "Monday">Monday</option>
-            <option id= "Tuesday"  value= "Tuesday">Tuesday</option>
-            <option id= "Wednesday"  value= "Wednesday">Wednesday</option>
-            <option id= "Thursday"  value= "Thursday">Thursday</option>
-            <option id= "Friday"  value= "Friday">Friday</option>
-            <option id= "Saturday"  value= "Saturday">Saturday</option>
-            <option id= "Sunday"   value= "Sunday" >Sunday</option>
-          </select>-->
         <label>Hours: </label>
         <input id="HourInput" name="HourInput" type="number">
       </div>
@@ -62,27 +51,7 @@
       <button type="submit" style="max-width: 10%; margin-top: 3%;" id="submitButton">Submit</button> <div id="submitMessage" style="visibility:hidden;"> Submitted!!</div>
       </form>
       </div>
-      <!-- I want to copy this whole div but make the id something like form-container2, 3, 4, etc.-->
 
-    <!--This can probably get moved to a different tab-->
-    <!--Add functionality to display by week, month, sum
-    <div class="container">
-      <h3>This Week: </h3>
-        <table id="myTable">
-          {% for key, value in data['file'].items() %}
-            <tr>
-              <th>{{value[0]}}</th>
-              <th>{{value[1]}}</th>
-              <th>{{value[2]}}</th>
-              <th>{{value[3]}}</th>
-              <th>{{value[4]}}</th>
-              <th>{{value[5]}}</th>
-              <th>{{value[6]}}</th>
-              <th>{{value[7]}}</th>
-            </tr>
-          {% endfor %}
-          </table> .-->
-      <!--This can probably get moved to a different tab-->
     <script>
       
       

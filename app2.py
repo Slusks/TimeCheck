@@ -102,10 +102,24 @@ now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S") # returns todays date
 today = calendar.day_name[now.weekday()] # returns today
 month = calendar.month_name[now.weekday()]
-dates = datetime.date#calendar.weekheader(10)
+dates = datetime.date
 days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
 
+def getWeekDict():
+    Dict = {}
+    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
+        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
+    return Dict
+
+
+def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get-the-current-week-using-python
+    """This code was provided in the previous answer! It's not mine!"""
+    d = datetime.date(year, 1, 1)                    # January 1st                                                          
+    d += timedelta(days = 6 - d.weekday())  # First Sunday                                                         
+    while d.year == year:
+        yield d
+        d += timedelta(days = 7)
 
 
 table={}
@@ -185,15 +199,13 @@ def aggFunct(filename, time):
     return df_grouped
 
 def thisWeek(filename):
-    Dict = {}
-    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
-        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
+    weekDict = getWeekDict()
     if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
         weekNum = now.isocalendar()[1]+1
     else:
         weekNum = now.isocalendar()[1]
     print("WeekNum:", weekNum)
-    week = Dict[weekNum]
+    week = weekDict[weekNum]
     df = pd.read_csv(filename)
     this_week = df.loc[df['dateworked'].isin(week)]
     this_week_formatted = this_week.groupby(['category','dateworked']).hours.sum().unstack().fillna("")
@@ -213,10 +225,8 @@ def thisWeek(filename):
     
 
 
-def getWeek(): #this should return a list of the days in the week
-    Dict = {}
-    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
-        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
+def getWeek() -> list: #this should return a list of the days in the week in the format YYYY-MM-DD
+    Dict = getWeekDict()
     if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
         weekNum = now.isocalendar()[1]+1
     else:
@@ -224,14 +234,13 @@ def getWeek(): #this should return a list of the days in the week
     week= Dict[weekNum]
     return week
 
-def getMonth():
-    Dict = {}
-    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
-        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
+def getMonth() -> list:
+    Dict = getWeekDict()
     if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
         weekNum = now.isocalendar()[1]+1
     else:
         weekNum = now.isocalendar()[1]
+    #this should be the slice of the first item in the week dict value that represents the month
     month_val = weekNum[Dict][0][5:7]
     year = weekNum[Dict][0][:4]
     num_days = calendar.monthrange(year, month)[1]
@@ -239,25 +248,17 @@ def getMonth():
     return month
 
 
-def getYear():
-    Dict = {}
-    for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
-        Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
-    year = []
+def getYear() -> list:
+    Dict = getWeekDict()
+    yeardays = []
     for i in Dict.values():
         for j in i:
-            year.append(j)
-    return j
+            yeardays.append(j)
+    return yeardays
 
 
 
-def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get-the-current-week-using-python
-    """This code was provided in the previous answer! It's not mine!"""
-    d = datetime.date(year, 1, 1)                    # January 1st                                                          
-    d += timedelta(days = 6 - d.weekday())  # First Sunday                                                         
-    while d.year == year:
-        yield d
-        d += timedelta(days = 7)
+
 
 
 
