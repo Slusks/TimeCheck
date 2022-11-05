@@ -77,12 +77,13 @@ def timekeeper():
         'totalByCategory': aggFunct(file2, ['all']),
         }
     weekTable = thisWeek(file2)
+    
 
     if request.method == "POST":
         time_period = request.form.get("aggregate")
         print("time_period", time_period)
         if time_period == "week":
-            time = thisWeek(file2)
+            time = getWeek()
             print("WEEK: ", aggFunct(file2, time))
             return aggFunct(file2, time)
         elif time_period == "month":
@@ -124,7 +125,7 @@ def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get
 
 table={}
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[1]
 
 
 
@@ -189,13 +190,14 @@ def update_csv(filename, data):
 def aggFunct(filename, time):
     df = pd.read_csv(filename)
     if len(time) > 1:
-        print("time", time)
+        #print("time", time)
         this_time = df.loc[df['dateworked'].isin(time)] #selecting records for the given week
         print(this_time)
         df_grouped = this_time.groupby(by="category")["hours"].sum().to_dict()
     else:
         df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
-        print("all", df_grouped)
+        #print("all", df_grouped)
+    print("df_grouped", df_grouped)
     return df_grouped
 
 def thisWeek(filename):
@@ -240,12 +242,13 @@ def getMonth() -> list:
         weekNum = now.isocalendar()[1]+1
     else:
         weekNum = now.isocalendar()[1]
+    cal = calendar.Calendar()
     #this should be the slice of the first item in the week dict value that represents the month
-    month_val = weekNum[Dict][0][5:7]
-    year = weekNum[Dict][0][:4]
-    num_days = calendar.monthrange(year, month)[1]
-    month = [datetime.date(year, month_val, day).strftime("%Y-%m-%d") for day in range(1, num_days+1)]
-    return month
+    month_val = int(Dict[weekNum][0][5:7])
+    year = int(Dict[weekNum][0][:4])
+    month_days = [ str(year) + "-" + str(month_val) + "-" + str(i) for i in cal.itermonthdays(year, month_val) if i > 0] 
+    print("num_days:", month_days)
+    return month_days
 
 
 def getYear() -> list:
