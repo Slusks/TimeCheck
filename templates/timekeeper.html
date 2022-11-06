@@ -15,31 +15,20 @@
   <div class="panel" id="tableContainer">
     <h2>Total by Category:</h2>
     <div id="pandas">
-    <table id="myTable">
-      <tr>
-        <th>Category</th>
-        <th>Total Hours</th>
-      </tr>
-      {% for key, value in timekeeperdata['totalByCategory'].items() %}
-        <tr>
-          <td>{{key}}</td>
-          <td>{{value}}</td>
-        </tr>
-      {% endfor %}
-      </table> 
-     <form method="post" action="{{ url_for('timekeeper')}}" name="timekeeperform1" id="timekeeperform1">
+      <div id="weekCategory" style="display:none;">{{ tables[2]|safe }}</div>
+      <div id="monthCategory" style="display:flex;">{{ tables[3]|safe }}</div>
+      <div id="yearCategory" style="display:none;">{{ tables[4]|safe }}</div>
+
+     
       <div id="timekeeperRadio" >
         <h5>Table Interval:</h5>
-        <form action="{{ url_for('home')}}" method="post"></form>
         <input type="radio" id="weekly" name="aggregate" value="week">
         <label for="weekly"> Week</label><br>
         <input type="radio" id="monthly" name="aggregate" value="month" checked>
         <label for="monthly" checked> Month</label><br>  
         <input type="radio" id="annually" name="aggregate" value="year">
         <label for="annually"> Year</label><br><br>
-        <br>
-        <input style="margin-left:10px;" type="submit" value="Submit">
-      </form>
+
       </div>
       </div>
   </div>
@@ -96,6 +85,47 @@
       } 
     });
   }
+
+  //Grab the div with the applicable pandas table
+  let weekCategory = document.getElementById("weekCategory")
+  let monthCategory = document.getElementById("monthCategory")
+  let yearCategory = document.getElementById("yearCategory")
+
+  //Grab the radiobuttons
+  radioButton = document.querySelectorAll("[name='aggregate']")
+
+  radioWeek = document.querySelector("[id='weekly']")
+  radioMonth = document.querySelector("[id='monthly']")
+  radioYear = document.querySelector("[id='annually']")
+
+  radioWeek.addEventListener("change", (event) => {
+    console.log("week button changed")
+    if (radioWeek.checked == true){
+      console.log("radio week")
+      weekCategory.style.display = "flex"
+      monthCategory.style.display = "none"
+      yearCategory.style.display = "none"
+    }})
+
+    radioMonth.addEventListener("change", (event) => {
+    console.log("month button changed")
+    if (radioMonth.checked == true){
+      console.log("radio month")
+      weekCategory.style.display = "none"
+      monthCategory.style.display = "flex"
+      yearCategory.style.display = "none"
+    }})
+
+    radioYear.addEventListener("change", (event) => {
+    console.log("year button changed")
+    if (radioYear.checked == true){
+      console.log("radio year")
+      weekCategory.style.display = "none"
+      monthCategory.style.display = "flex"
+      yearCategory.style.display = "none"
+    }})
+ 
+
   </script>
 {% endblock %}
 

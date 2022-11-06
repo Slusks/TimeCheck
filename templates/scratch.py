@@ -21,3 +21,21 @@ scratch
     
     #this_week = pd.DataFrame.from_dict(categories, orient="index", columns=week)
     return df_grouped2
+
+
+
+    if request.method == "POST":
+        time_period = request.form.get("aggregate")
+        print("time_period", time_period)
+        if time_period == "week":
+            time = getWeek()
+            print("WEEK: ", aggFunct(file2, time))
+            return aggFunct(file2, time)
+        elif time_period == "month":
+            thismonth = getMonth()
+            print("MONTH: ", aggFunct(file2, thismonth))
+            return aggFunct(file2, thismonth)
+        else:
+            year = getYear()
+            print("YEAR: ", aggFunct(file2, year))
+            return aggFunct(file2, year)

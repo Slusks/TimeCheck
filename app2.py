@@ -17,6 +17,10 @@ app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+computers = ['home', 'laptop', 'work']
+location = computers[0]
+
+
 
 #To start on development, need to enter the following information
 # set FLASK_APP=app2
@@ -77,27 +81,22 @@ def timekeeper():
         'totalByCategory': aggFunct(file2, ['all']),
         }
     weekTable = thisWeek(file2)
-    
-
-    if request.method == "POST":
-        time_period = request.form.get("aggregate")
-        print("time_period", time_period)
-        if time_period == "week":
-            time = getWeek()
-            print("WEEK: ", aggFunct(file2, time))
-            return aggFunct(file2, time)
-        elif time_period == "month":
-            thismonth = getMonth()
-            print("MONTH: ", aggFunct(file2, thismonth))
-            return aggFunct(file2, thismonth)
-        else:
-            year = getYear()
-            print("YEAR: ", aggFunct(file2, year))
-            return aggFunct(file2, year)
+    weekCategory = aggDF(file2, getWeek())
+    monthCategory = aggDF(file2, getMonth())
+    yearCategory = aggDF(file2, getYear())
 
 
     return render_template("timekeeper.html", timekeeperdata=timekeeperdata, 
-    tables=[full_hours.to_html(classes='data'), weekTable.to_html(classes='data')], titles=[full_hours.columns.values, weekTable.columns.values])
+    tables=[full_hours.to_html(classes='data'),
+        weekTable.to_html(classes='data'),
+        weekCategory.to_html(classes='data'),
+        monthCategory.to_html(classes='data'),
+        yearCategory.to_html(classes='data')],
+     titles=[full_hours.columns.values,
+         weekTable.columns.values,
+         weekCategory.columns.values,
+         monthCategory.columns.values,
+         yearCategory.columns.values])
 
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S") # returns todays date
@@ -124,8 +123,6 @@ def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get
 
 
 table={}
-computers = ['home', 'laptop', 'work']
-location = computers[1]
 
 
 
@@ -196,6 +193,19 @@ def aggFunct(filename, time):
         df_grouped = this_time.groupby(by="category")["hours"].sum().to_dict()
     else:
         df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
+        #print("all", df_grouped)
+    print("df_grouped", df_grouped)
+    return df_grouped
+
+def aggDF(filename, time):
+    df = pd.read_csv(filename)
+    if len(time) > 1:
+        #print("time", time)
+        this_time = df.loc[df['dateworked'].isin(time)] #selecting records for the given week
+        print(this_time)
+        df_grouped = this_time.groupby(by="category")["hours"].sum().to_frame()
+    else:
+        df_grouped = df.groupby(by="category")["hours"].sum().to_frame()
         #print("all", df_grouped)
     print("df_grouped", df_grouped)
     return df_grouped
