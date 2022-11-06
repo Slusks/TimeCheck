@@ -128,13 +128,20 @@
                 margin-left: 5px;
                 display: flex;
                 align-items: flex-start;
-                margin-bottom: 5px;
 }
 
             h5{
                 margin-right:10px;
             }
+            input[type="radio"]+label {
+                padding-left:0.5rem;
+                padding-right:1rem;
+                        }
             
+            input[type="radio"]:checked+label {
+                    color:hsl(10.22, 70%, 50%);
+                    font-weight: bold;
+                        }
 
 
        
