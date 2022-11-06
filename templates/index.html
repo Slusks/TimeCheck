@@ -24,14 +24,16 @@
               <option  value= "{{cat}}">{{cat}}</option>
               {% endfor %}
             </select>
-            </div>
+          </div>
           {% else %}
+          <div>
           <label>Project: </label>
-          <select id="project">
+          <select name="CategoryInput" id="project">
             {% for proj in data['jobs']['projects'] %}
             <option name="ProjectInput" value={{proj}}>{{proj}}</option>
             {% endfor %}
           </select>
+        </div>
         </div>
       {% endif %}
       <div>

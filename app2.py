@@ -51,7 +51,8 @@ def home():
                     "dateWorked": dateWorked,
                     "hours": hours,
                     "comment": comment,
-                    "engineer":engineer[0]
+                    "engineer":engineer[0],
+                    "team": engineer[1]
                     }
         update_csv(file2, payload)
         
