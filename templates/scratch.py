@@ -22,6 +22,18 @@ scratch
     #this_week = pd.DataFrame.from_dict(categories, orient="index", columns=week)
     return df_grouped2
 
+def aggFunct(filename, time):
+    df = pd.read_csv(filename)
+    if len(time) > 1:
+        #print("time", time)
+        this_time = df.loc[df['dateworked'].isin(time)] #selecting records for the given week
+        print(this_time)
+        df_grouped = this_time.groupby(by="category")["hours"].sum().to_dict()
+    else:
+        df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
+        #print("all", df_grouped)
+    print("df_grouped", df_grouped)
+    return df_grouped
 
 
     if request.method == "POST":

@@ -78,7 +78,6 @@ def timekeeper():
         'engineer':engineer,
         'jobs':jobs,
         'dates':dates,
-        'totalByCategory': aggFunct(file2, ['all']),
         }
     weekTable = thisWeek(file2)
     weekCategory = aggDF(file2, getWeek())
@@ -151,29 +150,21 @@ else:
 
 full_hours = pd.read_csv(file2)
 
-with open(file2) as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
-    line_count = 0
-    for row in csv_reader:
-        if line_count == 0:
-            table['headers'] = row[1:]
-            line_count +=1
-        else:
-            table[str(line_count)]=row[1:]
-            line_count +=1
+#I'm not sure what this is doing
+
     
             
-
+#Script that is reading the controller CSV to fill lists and engineer data
 with open(controller) as csv_controller:
     df = pd.read_csv(csv_controller)
-    user = os.getlogin()#getpass.getuser()
+    user = os.getlogin()
     #print("user", user)
     engineer = [user, df[df['Engineers']==user].Team.item()]
     #print(engineer)
     jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
 
             
-
+#Function that drops submitted data to a csv.
 def update_csv(filename, data):
     print("updating CSV")
     field_names = list(data.keys())
@@ -184,32 +175,20 @@ def update_csv(filename, data):
     print(data)
 
 #I want to create a function that will aggregate the project/category time for a given engineer
-def aggFunct(filename, time):
-    df = pd.read_csv(filename)
-    if len(time) > 1:
-        #print("time", time)
-        this_time = df.loc[df['dateworked'].isin(time)] #selecting records for the given week
-        print(this_time)
-        df_grouped = this_time.groupby(by="category")["hours"].sum().to_dict()
-    else:
-        df_grouped = df.groupby(by="category")["hours"].sum().to_dict()
-        #print("all", df_grouped)
-    print("df_grouped", df_grouped)
-    return df_grouped
-
 def aggDF(filename, time):
     df = pd.read_csv(filename)
     if len(time) > 1:
-        #print("time", time)
+        print("time", time)
         this_time = df.loc[df['dateworked'].isin(time)] #selecting records for the given week
-        print(this_time)
+        print("this_time:", this_time)
         df_grouped = this_time.groupby(by="category")["hours"].sum().to_frame()
     else:
         df_grouped = df.groupby(by="category")["hours"].sum().to_frame()
-        #print("all", df_grouped)
+        print("all", df_grouped)
     print("df_grouped", df_grouped)
     return df_grouped
 
+#Function that returns a dataframe with the categories worked on this week
 def thisWeek(filename):
     weekDict = getWeekDict()
     if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
@@ -231,12 +210,9 @@ def thisWeek(filename):
         column_dict.update({week[ind]:i+'\n'+week[ind][5:]})
     print(column_dict)
     this_week_formatted.rename(columns=column_dict, inplace=True)
-    return this_week_formatted
+    return this_week_formatted 
 
-
-    
-
-
+#function that returns a list of date strings for the current week YYYY-MM-DD
 def getWeek() -> list: #this should return a list of the days in the week in the format YYYY-MM-DD
     Dict = getWeekDict()
     if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
@@ -246,6 +222,7 @@ def getWeek() -> list: #this should return a list of the days in the week in the
     week= Dict[weekNum]
     return week
 
+#Function that returns a list of date strings for the current month YYYY-MM-DD
 def getMonth() -> list:
     Dict = getWeekDict()
     if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
@@ -256,11 +233,11 @@ def getMonth() -> list:
     #this should be the slice of the first item in the week dict value that represents the month
     month_val = int(Dict[weekNum][0][5:7])
     year = int(Dict[weekNum][0][:4])
-    month_days = [ str(year) + "-" + str(month_val) + "-" + str(i) for i in cal.itermonthdays(year, month_val) if i > 0] 
-    print("num_days:", month_days)
+    month_days = [ str(year) + "-" + str(month_val) + "-" + str(i).zfill(2) for i in cal.itermonthdays(year, month_val) if i > 0] 
+    print("month_days:", month_days)
     return month_days
 
-
+#function that returns a list of date strings for the current year YYYY-MM-DD
 def getYear() -> list:
     Dict = getWeekDict()
     yeardays = []
