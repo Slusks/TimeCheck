@@ -41,7 +41,6 @@ def home():
         'jobs':jobs
     }
     if request.method == "POST":
-        
         subject = request.form.get("CategoryInput")
         dateWorked = request.form.get("workedDate")
         hours = request.form.get("HourInput")
@@ -97,6 +96,7 @@ def timekeeper():
          monthCategory.columns.values,
          yearCategory.columns.values])
 
+#easy to use date/time variables
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S") # returns todays date
 today = calendar.day_name[now.weekday()] # returns today
@@ -105,12 +105,13 @@ dates = datetime.date
 days = ['Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 
 
+#These functions combine to get me a dict of every day in the year grouped by week with the 
+#week number as the dict key
 def getWeekDict():
     Dict = {}
     for wn,d in enumerate(allsundays(datetime.datetime.now().year)):
         Dict[wn+1] = [(d + timedelta(days=k)).isoformat() for k in range(0,7)]
     return Dict
-
 
 def allsundays(year): #https://stackoverflow.com/questions/2003841/how-can-i-get-the-current-week-using-python
     """This code was provided in the previous answer! It's not mine!"""
@@ -125,7 +126,8 @@ table={}
 
 
 
-
+#This set of scripts is setting my file paths based on location. This is going to have to be
+#greatly expanded as I build out file system.
 "ctrl + / to comment a block"
 if location == "home":
     try:
@@ -150,9 +152,7 @@ else:
 
 full_hours = pd.read_csv(file2)
 
-#I'm not sure what this is doing
 
-    
             
 #Script that is reading the controller CSV to fill lists and engineer data
 with open(controller) as csv_controller:
@@ -175,7 +175,8 @@ def update_csv(filename, data):
     print(data)
 
 #I want to create a function that will aggregate the project/category time for a given engineer
-def aggDF(filename, time):
+#returns dataframe
+def aggDF(filename, time): 
     df = pd.read_csv(filename)
     if len(time) > 1:
         print("time", time)
