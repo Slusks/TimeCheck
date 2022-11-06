@@ -5,26 +5,26 @@
     <h1>Time Tracking v0.0</h1>
     <h2>Time tracking tool for engineering group</h2>
     <h3>Day: {{ data['day'] }}</h3>
-    <h3>Login Time:{{ data['utc_dt'] }}</h3></h3>
-    <h3 id="test">Test:</h3>
-    <h3 id="user">Username: {{ data['engineer'][0] }}</h3>
+    <!--<h3>Login Time:{{ data['utc_dt'] }}</h3>-->
+    <!--<h3 id="test">Test:</h3>-->
+    <h3 id="user">Engineer Username: {{ data['engineer'][0] }}</h3>
     <h3 id="team">Team: {{ data['engineer'][1] }}</h3>
 
 
 
   <!-- I want to copy this whole div but make the id something like form-container2, 3, 4, etc.-->
-      <div class="container" id="form-container" style="display:flexbox;">
-        <form action="{{ url_for('home')}}" method="post" name="selection">
+    <div class="container" id="form-container">
+      <form action="{{ url_for('home')}}" method="post" name="selection">
         <div>
         {% if data['engineer'][1] == "Shop" %}
-        <div style="display: flex; float:left;">
-          <label>Category: </label>
-          <select name="CategoryInput" id="category">
-            {% for cat in data['jobs']['category'] %}
-            <option  value= "{{cat}}">{{cat}}</option>
-            {% endfor %}
-          </select>
-          </div>
+          <div>
+            <label>Category: </label>
+            <select name="CategoryInput" id="category">
+              {% for cat in data['jobs']['category'] %}
+              <option  value= "{{cat}}">{{cat}}</option>
+              {% endfor %}
+            </select>
+            </div>
           {% else %}
           <label>Project: </label>
           <select id="project">
@@ -33,17 +33,17 @@
             {% endfor %}
           </select>
         </div>
-        {% endif %}
-        <div>
-          <br><br>
-          <label>Date Worked: </label>
-          <input type="date" name="workedDate" 
-            value="{{data['utc_dt'][0:10]}}">
-        </div>
-        
-        <label>Hours: </label>
-        <input id="HourInput" name="HourInput" type="number">
+      {% endif %}
+      <div>
+        <br>
+        <label>Date Worked: </label>
+        <input type="date" name="workedDate" 
+          value="{{data['utc_dt'][0:10]}}">
       </div>
+      <br>
+      <label>Hours: </label>
+      <input id="HourInput" name="HourInput" type="number">
+    </div>
       <br>
       <label >Comments: </label>
       <textarea  id="comments" name="commentInput" style="width:80%;">None</textarea>

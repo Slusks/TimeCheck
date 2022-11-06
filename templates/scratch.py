@@ -39,3 +39,42 @@ scratch
             year = getYear()
             print("YEAR: ", aggFunct(file2, year))
             return aggFunct(file2, year)
+
+<!--<table id="myTable">
+      <tr>
+        <th>Category</th>
+        <th>Total Hours</th>
+      </tr>
+      {% for key, value in timekeeperdata['totalByCategory'].items() %}
+        <tr>
+          <td>{{key}}</td>
+          <td>{{value}}</td>
+        </tr>
+      {% endfor %}
+      </table> -->
+
+
+
+      
+  radioButton.forEach( radio => {
+  radio.addEventListener("change", (event) => {
+    console.log("radio button changed")
+    if (radio[0] == "checked"){
+      console.log("radio week")
+      weekCategory.style.display = "flex"
+      monthCategory.style.display = "none"
+      yearCategory.style.display = "none"
+    }
+    else if (radio[1] == "checked"){
+      console.log("radio month")
+      weekCategory.style.display = "none"
+      monthCategory.style.display = "flex"
+      yearCategory.style.display = "none"
+    }
+    else if (radio[2] == "checked"){
+      console.log("radio year")
+      weekCategory.style.display = "none"
+      monthCategory.style.display = "flex"
+      yearCategory.style.display = "none"
+    }
+    })})
