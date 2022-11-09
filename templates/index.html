@@ -2,19 +2,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Time Tracking v0.0</h1>
+<div class="container">
+    <h1>Time Tracking v0.2</h1>
     <h2>Time tracking tool for engineering group</h2>
     <h3>Day: {{ data['day'] }}</h3>
     <!--<h3>Login Time:{{ data['utc_dt'] }}</h3>-->
     <!--<h3 id="test">Test:</h3>-->
     <h3 id="user">Engineer Username: {{ data['engineer'][0] }}</h3>
     <h3 id="team">Team: {{ data['engineer'][1] }}</h3>
-
+  </div>
 
 
   <!-- I want to copy this whole div but make the id something like form-container2, 3, 4, etc.-->
     <div class="container" id="form-container">
       <form action="{{ url_for('home')}}" method="post" name="selection">
+        <div style="display:flex;">
+          <input type="radio" id="shop" name="team" value="shop">
+          <label for="shop"> Shop</label>
+          <input type="radio" id="rig" name="team" value="rig" >
+          <label for="rig"> Rig</label>
+        </div>
         <div>
         {% if data['engineer'][1] == "Shop" %}
           <div>
@@ -56,7 +63,7 @@
 
     <script>
       
-      
+     /*
       document.getElementById("test").innerText = "Test"
       //Creates default Day
       let jsDay = {{ data['day'] | tojson }}
@@ -65,20 +72,20 @@
       document.getElementById("submitButton").addEventListener("click", (e) =>{
         console.log("button was clicked")
         document.getElementById("submitMessage").style.visibility = "visible"
-      })
+      })*/
+   
+    var myTeam = "{{ data['engineer'][1] }}";
+    console.log("team", myTeam);
+    radioShop = document.querySelector("[id='shop']");
+    radioRig = document.querySelector("[id='rig']");
 
 
-
-
-      function newRow(){
-        console.log("cloning")
-
-
-
-
-
-        
-      }
+    if (myTeam == "Shop"){
+      radioShop.checked = true
+    }else {
+      radioRig.checked = true
+    }
+    
       
     </script>
     </div>

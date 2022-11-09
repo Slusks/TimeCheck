@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[1]
 
 
 
@@ -142,6 +142,8 @@ elif location =="laptop":
     try:
         file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
         controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
+        file3 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\rigTemplate.csv')
+
     except:
         print("not on laptop")
         pass
