@@ -23,8 +23,8 @@
           <label for="rig"> Rig</label>
         </div>
         <div>
-        {% if data['engineer'][1] == "Shop" %}
-          <div>
+        
+          <div id="shopForm">
             <label>Category: </label>
             <select name="CategoryInput" id="category">
               {% for cat in data['jobs']['category'] %}
@@ -32,8 +32,8 @@
               {% endfor %}
             </select>
           </div>
-          {% else %}
-          <div>
+          
+          <div id="rigForm">
           <label>Project: </label>
           <select name="CategoryInput" id="project">
             {% for proj in data['jobs']['projects'] %}
@@ -42,7 +42,7 @@
           </select>
         </div>
         </div>
-      {% endif %}
+      
       <div>
         <br>
         <label>Date Worked: </label>
@@ -52,13 +52,15 @@
       <br>
       <label>Hours: </label>
       <input id="HourInput" name="HourInput" type="number">
-    </div>
+      <br>
       <br>
       <label >Comments: </label>
       <textarea  id="comments" name="commentInput" style="width:80%;">None</textarea>
+    
       <br>
       <button type="submit" style="max-width: 10%; margin-top: 3%;" id="submitButton">Submit</button> <div id="submitMessage" style="visibility:hidden;"> Submitted!!</div>
       </form>
+      </div>
       </div>
 
     <script>
@@ -73,19 +75,29 @@
         console.log("button was clicked")
         document.getElementById("submitMessage").style.visibility = "visible"
       })*/
+    
+
    
     var myTeam = "{{ data['engineer'][1] }}";
     console.log("team", myTeam);
     radioShop = document.querySelector("[id='shop']");
     radioRig = document.querySelector("[id='rig']");
-
+    shopForm = document.getElementById('shopForm')
+    rigForm = document.getElementById('rigForm')
 
     if (myTeam == "Shop"){
-      radioShop.checked = true
+      radioShop.checked = true;
     }else {
       radioRig.checked = true
     }
-    
+
+    if (radioShop.checked == true){
+      shopForm.style.display = "block";
+      rigForm.style.display = "none";
+    } else {
+      shopForm.style.display = "none";
+      rigForm.style.display = "block";
+    }
       
     </script>
     </div>
