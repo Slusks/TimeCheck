@@ -64,20 +64,7 @@
       </div>
 
     <script>
-      
-     /*
-      document.getElementById("test").innerText = "Test"
-      //Creates default Day
-      let jsDay = {{ data['day'] | tojson }}
-      document.getElementById(jsDay).setAttribute("selected", "selected")
-    
-      document.getElementById("submitButton").addEventListener("click", (e) =>{
-        console.log("button was clicked")
-        document.getElementById("submitMessage").style.visibility = "visible"
-      })*/
-    
-
-   
+  
     var myTeam = "{{ data['engineer'][1] }}";
     console.log("team", myTeam);
     radioShop = document.querySelector("[id='shop']");
@@ -85,19 +72,38 @@
     shopForm = document.getElementById('shopForm')
     rigForm = document.getElementById('rigForm')
 
+
+
     if (myTeam == "Shop"){
       radioShop.checked = true;
-    }else {
-      radioRig.checked = true
-    }
-
-    if (radioShop.checked == true){
       shopForm.style.display = "block";
       rigForm.style.display = "none";
-    } else {
+    }else {
+      radioRig.checked = true
       shopForm.style.display = "none";
       rigForm.style.display = "block";
     }
+
+
+    radioShop.addEventListener("change", (event) => {
+    console.log("shop button changed")
+    if (radioShop.checked == true){
+        console.log("Shop")
+        shopForm.style.display = "block";
+        rigForm.style.display = "none";
+      }});
+
+    radioRig.addEventListener("change", (event) => {
+    console.log("shop button changed")
+    if (radioRig.checked == true){
+        console.log("rig")
+        shopForm.style.display = "none";
+        rigForm.style.display = "block";
+      }});
+
+
+
+
       
     </script>
     </div>
