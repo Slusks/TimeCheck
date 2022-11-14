@@ -12,13 +12,17 @@ from csv import DictWriter
 from pathlib import Path
 import pandas as pd
 
+import PYcontroller #This is going to be the controller file. Yay for refactoring!
+
+
+
 
 app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[2]
+location = computers[0]
 
 
 
@@ -165,6 +169,13 @@ with open(controller) as csv_controller:
     engineer = [user, df[df['Engineers']==user].Team.item()]
     #print(engineer)
     jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
+
+##REPLACING THE ABOVE SCRIPT FOR ACCESSING THE CONTROLLER FILE
+engineer = [PYcontroller.engineers.keys()]
+print(engineer)
+categoryShop = [PYcontroller.category]
+print(categoryShop)
+categoryRig = [PYcontroller.task]
 
             
 #Function that drops submitted data to a csv.
