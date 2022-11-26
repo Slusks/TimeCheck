@@ -1,5 +1,17 @@
 scratch
 
+
+
+#Script that is reading the controller CSV to fill lists and engineer data
+with open(controller) as csv_controller:
+    df = pd.read_csv(csv_controller)
+    user = os.getlogin()
+    #print("user", user)
+    engineer = [user, df[df['Engineers']==user].Team.item()]
+    #print(engineer)
+    jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
+    print("JOBS", jobs)
+
     #This is creating a dictionary with the category and date and then the sum of hours worked on that date
     df_grouped = this_week.groupby(by=["category", "dateworked"])["hours"].sum().to_dict()
     print("df_grouped", df_grouped)

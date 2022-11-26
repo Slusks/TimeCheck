@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[1]
 
 
 
@@ -136,6 +136,7 @@ table={}
 "ctrl + / to comment a block"
 if location == "home":
     try:
+        user = os.getlogin()
         file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
         file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
         controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
@@ -144,6 +145,7 @@ if location == "home":
         pass
 elif location =="laptop":
     try:
+        user = 'Sam'
         file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
         controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
         file3 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\rigTemplate.csv')
@@ -161,21 +163,23 @@ full_hours = pd.read_csv(file2)
 
 
             
-#Script that is reading the controller CSV to fill lists and engineer data
-with open(controller) as csv_controller:
-    df = pd.read_csv(csv_controller)
-    user = os.getlogin()
-    #print("user", user)
-    engineer = [user, df[df['Engineers']==user].Team.item()]
-    #print(engineer)
-    jobs = {"category":df['Categorys'].tolist(), "projects":df['Projects'].tolist()}
 
 ##REPLACING THE ABOVE SCRIPT FOR ACCESSING THE CONTROLLER FILE
-engineer = [PYcontroller.engineers.keys()]
-print(engineer)
-categoryShop = [PYcontroller.category]
-print(categoryShop)
-categoryRig = [PYcontroller.task]
+engineer = [user, PYcontroller.engineers[user]]
+#engineers = [key for d in PYcontroller.engineers for key in d.keys()]
+print("engineer", engineer)
+categoryShop = PYcontroller.category
+print("categoryShop", categoryShop)
+categoryRig=[]
+for i in PYcontroller.task:
+    if type(i) == str:
+        categoryRig.append(i)
+    elif type(i) == dict:
+        categoryRig.append(list(i.keys())[0])
+print("categoryRig", categoryRig)
+jobs = {"category":categoryShop, "projects":categoryRig}
+
+#################################
 
             
 #Function that drops submitted data to a csv.

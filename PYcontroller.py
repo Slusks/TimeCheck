@@ -1,14 +1,15 @@
-{
-    "category":[
-        "Technical Documentation",
-        "Test Rigs",
-        "Tooling//Fixture//Test Box",
-        "Administrative",
-        "Engineering Disposition",
-        "External Communication",
-        "Warranty//Red Bag"
-    ],
-    "task":[
+
+category = [
+    "Technical Documentation",
+    "Test Rigs",
+    "Tooling//Fixture//Test Box",
+    "Administrative",
+    "Engineering Disposition",
+    "External Communication",
+    "Warranty//Red Bag"
+]
+
+task = [
         "training",
         {"Repair//Troubleshooting":[
             {"ACT":[
@@ -53,12 +54,10 @@
             "New Heli Rig",
             "TimeTracker"
         ]}
-    ],
-    "engineers":[
-        {"Bill":"Shop"},
-        {"Nate":"Rig"},
-        {"Sam":"Shop"},
-        {"Adrian":"Rig"},
-        {"Trevor":"Shop"}
     ]
-}
+engineers= {"Bill":"Shop",
+        "Nate":"Rig",
+        "Sam":"Shop",
+        "Adrian":"Rig",
+        "Trevor":"Shop"}
+    
