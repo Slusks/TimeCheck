@@ -11,43 +11,43 @@ category = [
 
 task = [
         "training",
-        {"Repair//Troubleshooting":[
-            {"ACT":[
+        {"Troubleshooting":{
+            "ACT":[
                 "MONR-ACT-001",
                 "MONR-ACT-002",
                 "MONR-ACT-003",
                 "MONR-ACT-004",
                 "MONR-ACT-005",
                 "MONR-ACT-006"
-            ]},
-            {"CARGO":[
+            ],
+            "CARGO":[
                 "MONR-CAR-001"
-            ]},
-            {"Heli":[
+            ],
+            "Heli":[
                 "MONR-HES-001"
-            ]},
-            {"Vapo":[
+            ],
+            "Vapo":[
                 "MONR-VAP-001"
-            ]},
-            {"Rota":[
+            ],
+            "Rota":[
                 "MONR-ROT-001"
-            ]},
-            {"Fans":[
+            ],
+            "Fans":[
                 "MONR-FAN-001"
-            ]},
-            {"Hoist":[
+            ],
+            "Hoist":[
                 "MONR-HOW-001"
-            ]},
-            {"Starters":[
+            ],
+            "Starters":[
                 "MONR-STR-001"
-            ]},
-            {"DeIcing":[
+            ],
+            "DeIcing":[
                 "MONR-ICE-001"
-            ]},
-            {"Lighting":[
+            ],
+            "Lighting":[
                 "MONR-LIT-001"
-            ]}
-        ]},
+            ]
+        }},
         {"Project":[
             "Project A",
             "THSA Rig",
@@ -55,9 +55,24 @@ task = [
             "TimeTracker"
         ]}
     ]
-engineers= {"Bill":"Shop",
-        "Nate":"Rig",
-        "Sam":"Shop",
-        "Adrian":"Rig",
-        "Trevor":"Shop"}
+engineers= {
+        "home": {
+                "Bill":"Shop",
+                "Nate":"Rig",
+                "Sam":"Shop",
+                "Adrian":"Rig",
+                "Trevor":"Shop"},
+        "laptop": {
+                "Bill":"Shop",
+                "Nate":"Rig",
+                "samsl":"Shop",
+                "Adrian":"Rig",
+                "Trevor":"Shop"},
+        "work": {
+                "Bill":"Shop",
+                "Nate":"Rig",
+                "Sam":"Shop",
+                "Adrian":"Rig",
+                "Trevor":"Shop"}
+}
     

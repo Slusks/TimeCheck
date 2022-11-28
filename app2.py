@@ -42,7 +42,8 @@ def home():
         'day':today,
         'file':table,
         'engineer':engineer,
-        'jobs':jobs
+        'jobs':jobs,
+        'rigData': rigData['ACT']
     }
     if request.method == "POST":
         subject = request.form.get("CategoryInput")
@@ -81,7 +82,7 @@ def timekeeper():
         'file':table,
         'engineer':engineer,
         'jobs':jobs,
-        'dates':dates,
+        'dates':dates
         }
     weekTable = thisWeek(file2)
     weekCategory = aggDF(file2, getWeek())
@@ -136,7 +137,7 @@ table={}
 "ctrl + / to comment a block"
 if location == "home":
     try:
-        user = os.getlogin()
+        
         file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
         file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
         controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
@@ -145,7 +146,6 @@ if location == "home":
         pass
 elif location =="laptop":
     try:
-        user = 'Sam'
         file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
         controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
         file3 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\rigTemplate.csv')
@@ -165,9 +165,10 @@ full_hours = pd.read_csv(file2)
             
 
 ##REPLACING THE ABOVE SCRIPT FOR ACCESSING THE CONTROLLER FILE
-engineer = [user, PYcontroller.engineers[user]]
+user = os.getlogin()
+engineer = [user, PYcontroller.engineers[location][user]]
 #engineers = [key for d in PYcontroller.engineers for key in d.keys()]
-print("engineer", engineer)
+#print("engineer", engineer)
 categoryShop = PYcontroller.category
 print("categoryShop", categoryShop)
 categoryRig=[]
@@ -179,32 +180,34 @@ for i in PYcontroller.task:
 print("categoryRig", categoryRig)
 jobs = {"category":categoryShop, "projects":categoryRig}
 
+rigData = PYcontroller.task[1]["Troubleshooting"]
+
 #################################
 
             
 #Function that drops submitted data to a csv.
 def update_csv(filename, data):
-    print("updating CSV")
+    #print("updating CSV")
     field_names = list(data.keys())
     with open(filename, 'a', newline="") as file_object:
         dictwriter_object= DictWriter(file_object, fieldnames=field_names)
         dictwriter_object.writerow(data)
         file_object.close()
-    print(data)
+    #print(data)
 
 #I want to create a function that will aggregate the project/category time for a given engineer
 #returns dataframe
 def aggDF(filename, time): 
     df = pd.read_csv(filename)
     if len(time) > 1:
-        print("time", time)
+        #print("time", time)
         this_time = df.loc[df['dateworked'].isin(time)] #selecting records for the given week
-        print("this_time:", this_time)
+        #print("this_time:", this_time)
         df_grouped = this_time.groupby(by="category")["hours"].sum().to_frame()
     else:
         df_grouped = df.groupby(by="category")["hours"].sum().to_frame()
-        print("all", df_grouped)
-    print("df_grouped", df_grouped)
+        #print("all", df_grouped)
+    #print("df_grouped", df_grouped)
     return df_grouped
 
 #Function that returns a dataframe with the categories worked on this week
@@ -227,7 +230,7 @@ def thisWeek(filename):
     for i in days:
         ind = days.index(i)
         column_dict.update({week[ind]:i+'\n'+week[ind][5:]})
-    print(column_dict)
+    #print(column_dict)
     this_week_formatted.rename(columns=column_dict, inplace=True)
     return this_week_formatted 
 
