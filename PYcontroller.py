@@ -48,12 +48,16 @@ task = [
                 "MONR-LIT-001"
             ]
         }},
-        {"Project":[
+        {"project":{
+            "active":[
             "Project A",
-            "THSA Rig",
             "New Heli Rig",
             "TimeTracker"
-        ]}
+        ],
+            "inactive":[
+                "THSA Rig"
+            ]}
+        }
     ]
 engineers= {
         "home": {

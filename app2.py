@@ -43,7 +43,8 @@ def home():
         'file':table,
         'engineer':engineer,
         'jobs':jobs,
-        'rigData': rigData['ACT']
+        'rigData': rigData,
+        'projectData': activeProjectData
     }
     if request.method == "POST":
         subject = request.form.get("CategoryInput")
@@ -181,6 +182,7 @@ print("categoryRig", categoryRig)
 jobs = {"category":categoryShop, "projects":categoryRig}
 
 rigData = PYcontroller.task[1]["Troubleshooting"]
+activeProjectData = PYcontroller.task[2]["project"]["active"]
 
 #################################
 
