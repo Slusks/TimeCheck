@@ -10,7 +10,9 @@
     <!--<h3 id="test">Test:</h3>-->
     <h3 id="user">Engineer Username: {{ data['engineer'][0] }}</h3>
     <h3 id="team">Team: {{ data['engineer'][1] }}</h3>
-    <h4>{{data["rigData"]}}</h4>
+    <h4>Troubleshooting: {{data["rigData"]}}</h4>
+    <h4> Projects: {{data["projectData"]}}</h4>
+
   </div>
 
 
@@ -43,18 +45,26 @@
           </select>
           <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_cascading_dropdown-->
           <label>SHOP</label>
-          <select name="subject" id="subject">
-            <option value="" selected="selected">Select subject</option>
+          <select name="shop" id="shop">
+            {% for shop in data['rigData'] %}
+            <option name="ShopInput" value={{shop}}>{{shop}}</option>
+            {% endfor %}
           </select>
           
           <label>RIG</label>
-          <select name="topic" id="topic">  
-            <option value="" selected="selected">Please select subject first</option>
+          <select name="rig" id="rig">
+          {% for shop in data['rigData'] %}
+            {% for rig in data['rigData'][shop] %}
+            <option name="RigInput" value={{rig}}>{{rig}}</option>
+            {% endfor %}
+          {% endfor %}
           </select>
           
           <label>PROJECT</label>
-          <select name="topic" id="topic">
-            <option value="" selected="selected">Please select subject first</option>
+          <select name="project" id="project">
+            {% for project in data['projectData'] %}
+            <option name="ProjectInput" value={{project}}>{{project}}</option>
+            {% endfor %}
           </select>
           <br><br>
 
@@ -95,36 +105,44 @@
     //Create functions for showing project and rig menus as needed
     var rigMenuContent = ['{{data["rigData"]}}'];
     var projectMenuContent = ['{{data["projectData"]}}'];
+    var subjectObject = {"rigData": rigMenuContent, "projectData":projectMenuContent}
+    console.log(subjectObject)
     shopMenu = "TBD"
     rigMenu = "TBD"
     projectMenu = "TBD"
 
-    window.onload = function() {
-  var subjectSel = document.getElementById("subject");
-  var topicSel = document.getElementById("topic");
-  var chapterSel = document.getElementById("chapter");
+
+
+
+
+///////Menu Manager //////
+/*
+  window.onload = function() {
+  var subjectSel = document.getElementById("project");
+  var topicSel = document.getElementById("subject");
+  var chapterSel = document.getElementById("topic");
   for (var x in subjectObject) {
     subjectSel.options[subjectSel.options.length] = new Option(x, x);
   }
   subjectSel.onchange = function() {
-    //empty Chapters- and Topics- dropdowns
-    chapterSel.length = 1;
-    topicSel.length = 1;
+    //empty Chapters- and Topics- dropdowns
+    chapterSel.length = 1;
+    topicSel.length = 1;
     //display correct values
     for (var y in subjectObject[this.value]) {
       topicSel.options[topicSel.options.length] = new Option(y, y);
     }
   }
   topicSel.onchange = function() {
-    //empty Chapters dropdown
-    chapterSel.length = 1;
+    //empty Chapters dropdown
+    chapterSel.length = 1;
     //display correct values
     var z = subjectObject[subjectSel.value][this.value];
     for (var i = 0; i < z.length; i++) {
       chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
     }
   }
-}
+}*/
 
 
     //

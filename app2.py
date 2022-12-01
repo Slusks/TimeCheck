@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[1]
+location = computers[0]
 
 
 
@@ -48,19 +48,23 @@ def home():
     }
     if request.method == "POST":
         subject = request.form.get("CategoryInput")
-        dateWorked = request.form.get("workedDate")
-        hours = request.form.get("HourInput")
-        comment = request.form.get("commentInput")
-        timestamp =datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
-        payload = {"timestamp": timestamp,
-                    "subject": subject,
-                    "dateWorked": dateWorked,
-                    "hours": hours,
-                    "comment": comment,
-                    "engineer":engineer[0],
-                    "team": engineer[1]
-                    }
-        update_csv(file2, payload)
+        if subject == "Select":
+            print("STAAAAHP")
+            pass
+        else:
+            dateWorked = request.form.get("workedDate")
+            hours = request.form.get("HourInput")
+            comment = request.form.get("commentInput")
+            timestamp =datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
+            payload = {"timestamp": timestamp,
+                        "subject": subject,
+                        "dateWorked": dateWorked,
+                        "hours": hours,
+                        "comment": comment,
+                        "engineer":engineer[0],
+                        "team": engineer[1]
+                        }
+            update_csv(file2, payload)
         
         #print("output: ", subject, dayWorked, hour, comment, timestamp)
     return render_template('index.html', data=data)
@@ -138,7 +142,6 @@ table={}
 "ctrl + / to comment a block"
 if location == "home":
     try:
-        
         file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
         file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
         controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
@@ -181,8 +184,8 @@ for i in PYcontroller.task:
 print("categoryRig", categoryRig)
 jobs = {"category":categoryShop, "projects":categoryRig}
 
-rigData = PYcontroller.task[1]["Troubleshooting"]
-activeProjectData = PYcontroller.task[2]["project"]["active"]
+rigData = PYcontroller.task[2]["Troubleshooting"]
+activeProjectData = PYcontroller.task[3]["project"]["active"]
 
 #################################
 
@@ -237,7 +240,7 @@ def thisWeek(filename):
     return this_week_formatted 
 
 #function that returns a list of date strings for the current week YYYY-MM-DD
-def getWeek() -> list: #this should return a list of the days in the week in the format YYYY-MM-DD
+def getWeek() -> list: ##this should return a list of the days in the week in the format YYYY-MM-DD
     Dict = getWeekDict()
     if now.isocalendar()[2] == 7: #this function doesn't work on Sunday if I dont put this if statement in. Not sure why
         weekNum = now.isocalendar()[1]+1
@@ -261,7 +264,7 @@ def getMonth() -> list:
     print("month_days:", month_days)
     return month_days
 
-#function that returns a list of date strings for the current year YYYY-MM-DD
+#Function that returns a list of date strings for the current year YYYY-MM-DD
 def getYear() -> list:
     Dict = getWeekDict()
     yeardays = []

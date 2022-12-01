@@ -1,5 +1,6 @@
 
 category = [
+    "Select",
     "Technical Documentation",
     "Test Rigs",
     "Tooling//Fixture//Test Box",
@@ -10,7 +11,9 @@ category = [
 ]
 
 task = [
-        "training",
+        "Select",
+        {"training":["Computer Based", "Classroom", "Offsite"]
+        },
         {"Troubleshooting":{
             "ACT":[
                 "MONR-ACT-001",
@@ -63,7 +66,7 @@ engineers= {
         "home": {
                 "Bill":"Shop",
                 "Nate":"Rig",
-                "Sam":"Shop",
+                "sam":"Shop",
                 "Adrian":"Rig",
                 "Trevor":"Shop"},
         "laptop": {
