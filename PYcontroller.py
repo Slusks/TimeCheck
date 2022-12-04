@@ -72,7 +72,7 @@ engineers= {
         "laptop": {
                 "Bill":"Shop",
                 "Nate":"Rig",
-                "samsl":"Shop",
+                "samsl":"Rig",
                 "Adrian":"Rig",
                 "Trevor":"Shop"},
         "work": {

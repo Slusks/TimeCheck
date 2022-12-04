@@ -17,12 +17,21 @@
         }
 
         nav a {
-            color: #E2725b ;
+            color: #E2725b ;    
             font-size: 3em;
             padding-left: 50px;
             text-decoration: none;
             background-color: hsl(218, 0%, 18%)
             }
+
+        nav a:hover{
+            color:hsl(150, 42%, 32%);
+        }
+
+        nav a:active{
+            color:hsl(150, 42%, 32%);
+        }
+
 
 
         th, td {
@@ -140,9 +149,9 @@
 </head>
 <body>
     <nav>
-        <a href="/">FlaskApp</a>
-        <a href="{{url_for('timekeeper')}}">Timekeeper</a>
-        <a href="{{url_for('engineers')}}">Engineers</a>
+        <a href="/" tabindex="1" name="formpage">Home</a>
+        <a href="{{url_for('timekeeper')}}" name="timekeeper">Timekeeper</a>
+        <a href="{{url_for('engineers')}}" name="admin" >Administration</a>
         
     </nav>
     <hr>
