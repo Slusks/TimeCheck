@@ -17,7 +17,9 @@
     <!--<h3 id="test">Test:</h3>-->
     <h3 id="user">Engineer Username: {{ data['engineer'][0] }}</h3>
     <h3 id="team">Team: {{ data['engineer'][1] }}</h3>
-    <h4>Troubleshooting: {{data["rigData"]}}</h4>
+    <h4>
+    {{data['rigTeam']}}
+    </h4>
     <h4> Projects: {{data["projectData"]}}</h4>
 
   </div>
@@ -42,6 +44,8 @@
               {% endfor %}
             </select>
           </div>
+          <!--EVERYTHING ABOVE THIS IS FINE AND PLEASE DONT TOUCH IT-->
+          
           
           <div id="rigForm">
           <label>Category: </label>
@@ -51,6 +55,7 @@
             {% endfor %}
           </select>
           <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_cascading_dropdown-->
+          
           <label>SHOP</label>
           <select name="shop" id="shop">
             {% for shop in data['rigData'] %}
@@ -75,34 +80,17 @@
           </select>
           <br><br>
 
-          <label>Category: </label>
-          <select name="CategoryInput" id="project">
-            {% for proj in data['jobs']['projects'] %}
-            <option name="ProjectInput" value={{proj}}>{{proj}}</option>
-            {% endfor %}
+          <!-- THIS IS THE ONE I WANT TO PLAY WITH-->
+          Category: <select name="subject" id="lvl1">
+            <option value="" selected="selected">Select subject</option>
           </select>
-          <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_cascading_dropdown-->
-          <label>SHOP</label>
-          <select name="shop" id="shop">
-            {% for shop in data['rigData'] %}
-            <option name="ShopInput" value={{shop}}>{{shop}}</option>
-            {% endfor %}
+          <br><br>
+          SHOP: <select name="topic" id="lvl2">
+            <option value="" selected="selected">Please select subject first</option>
           </select>
-          
-          <label>RIG</label>
-          <select name="rig" id="rig">
-          {% for shop in data['rigData'] %}
-            {% for rig in data['rigData'][shop] %}
-            <option name="RigInput" value={{rig}}>{{rig}}</option>
-            {% endfor %}
-          {% endfor %}
-          </select>
-          
-          <label>PROJECT</label>
-          <select name="project" id="project">
-            {% for project in data['projectData'] %}
-            <option name="ProjectInput" value={{project}}>{{project}}</option>
-            {% endfor %}
+          <br><br>
+          RIGS: <select name="chapter" id="lvl3">
+            <option value="" selected="selected">Please select topic first</option>
           </select>
 
 
@@ -142,9 +130,9 @@
     rigForm = document.getElementById('rigForm')
 
     //Create functions for showing project and rig menus as needed
-    var rigMenuContent = ['{{data["rigData"]}}'];
-    var projectMenuContent = ['{{data["projectData"]}}'];
-    var subjectObject = {"rigData": rigMenuContent, "projectData":projectMenuContent}
+    let Troubleshooting = '{{data["rigData"] | tojson}}';
+    let Project = '{{data["projectData"] | tojson}}';
+    var subjectObject = {Troubleshooting, Project};
     console.log(subjectObject)
     shopMenu = "TBD"
     rigMenu = "TBD"
@@ -155,12 +143,13 @@
 
 
 ///////Menu Manager //////
-/*
+
   window.onload = function() {
-  var subjectSel = document.getElementById("project");
-  var topicSel = document.getElementById("subject");
-  var chapterSel = document.getElementById("topic");
-  for (var x in subjectObject) {
+  var subjectSel = document.getElementById("lvl1");
+  var topicSel = document.getElementById("lvl2");
+  var chapterSel = document.getElementById("lvl3");
+  for (var i in subjectObject) {
+    for (x in i){
     subjectSel.options[subjectSel.options.length] = new Option(x, x);
   }
   subjectSel.onchange = function() {
@@ -181,7 +170,8 @@
       chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
     }
   }
-}*/
+}
+  }
 
 
     //

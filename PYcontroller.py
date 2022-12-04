@@ -15,7 +15,7 @@ task = [
         {"training":["Computer Based", "Classroom", "Offsite"]
         },
         {"Troubleshooting":{
-            "ACT":[
+            'ACT':[
                 "MONR-ACT-001",
                 "MONR-ACT-002",
                 "MONR-ACT-003",
