@@ -2,6 +2,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<nav>
+  <a href="/" name='formpage' style="color:hsl(150, 42%, 32%);">Home</a>
+  <a href="{{url_for('timekeeper')}}" name='timekeeper' style="color: #E2725b;">Timekeeper</a>
+  <a href="{{url_for('engineers')}}" name='admin' style="color: #E2725b;" >Administration</a>
+  
+</nav>
+<hr>
 <div class="container">
     <h1>Time Tracking v0.3</h1>
     <h2>Time tracking tool for engineering group</h2>

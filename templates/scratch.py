@@ -1,5 +1,6 @@
 scratch
 
+color: #E2725b
 
 
 #Script that is reading the controller CSV to fill lists and engineer data

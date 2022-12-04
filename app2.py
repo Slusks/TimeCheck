@@ -44,7 +44,8 @@ def home():
         'engineer':engineer,
         'jobs':jobs,
         'rigData': rigData,
-        'projectData': activeProjectData
+        'projectData': activeProjectData,
+        'home':True
     }
     if request.method == "POST":
         subject = request.form.get("CategoryInput")
@@ -87,7 +88,8 @@ def timekeeper():
         'file':table,
         'engineer':engineer,
         'jobs':jobs,
-        'dates':dates
+        'dates':dates,
+        'timekeeper':True
         }
     weekTable = thisWeek(file2)
     weekCategory = aggDF(file2, getWeek())
