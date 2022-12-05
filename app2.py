@@ -1,6 +1,6 @@
 #Original test file from: https://www.digitalocean.com/community/tutorials/how-to-use-templates-in-a-flask-application
 
-from flask import Flask, abort, render_template, request
+from flask import Flask, abort, render_template, request, url_for
 from markupsafe import escape
 import getpass
 import os
@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[1]
+location = computers[2]
 
 
 

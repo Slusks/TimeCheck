@@ -12,19 +12,32 @@
 <title>{% block title %} {% endblock %} - EngineeringTime</title>
     <style>
         body{
-            background-color: hsl(218, 0%, 18%);
+            background-color: black;
             color: whitesmoke;
         }
 
+        nav {
+            background-color: hsl(214, 7%, 42%);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
         nav a {
-            
-            font-size: 3em;
+            font-size: 2em;
             padding-left: 50px;
             text-decoration: none;
-            background-color: hsl(218, 0%, 18%)
             }
 
 
+        span.nav-right {
+            float: right;
+        }
+
+        img#logo {
+            max-width: 320px;
+            max-height: 3em; 
+            padding-top: 5%;
+            padding-right: 7%
+        }
 
 
 
@@ -39,7 +52,7 @@
         tr {
             border-bottom: 1px solid #ddd;
             }
-            tr:hover {background-color: hsl(10.22, 70%, 30%);}
+            tr:hover {background-color: hsl(353, 85%, 22%);}
         td {
             min-height:3rem;
             
@@ -101,12 +114,12 @@
             }
 
             #pandas table thead tr th:first-child{
-                color:hsl(218, 0%, 18%);
+                color:black;
                 border-color: #ccc;
             }
 
             #pandas table thead tr th:first-child:hover{
-                color:hsl(10.22, 70%, 30%)
+                color:hsl(353, 85%, 22%)
             }
 
             #pandas table thead tr:nth-child(2) th:first-child{
@@ -135,7 +148,7 @@
                         }
             
             input[type="radio"]:checked+label {
-                    color:hsl(10.22, 70%, 50%);
+                    color:hsl(353, 85%, 44%);
                     font-weight: bold;
                         }
 

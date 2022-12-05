@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <nav>
-    <a href="/" name='formpage' style="color:#E2725b;">Home</a>
-    <a href="{{url_for('timekeeper')}}" name='timekeeper' style="color: #E2725b;">Timekeeper</a>
-    <a href="{{url_for('engineers')}}" name='admin' style="color: hsl(150, 42%, 32%);" >Administration</a>
+    <a href="/" name='formpage' style="color:white">Home</a>
+    <a href="{{url_for('timekeeper')}}" name='timekeeper' style="color: white">Timekeeper</a>
+    <a href="{{url_for('engineers')}}" name='admin' style="color:hsl(353, 85%, 44%); font-weight: bold; text-shadow: 1px 1px  black;" >Administration</a>
+    <span class="nav-right"><img id='logo' src="{{url_for('static', filename='White Logo.png')}}"></span>
   </nav>
-  <hr>
+  <br>
     <h1>{% block title %} Engineers {% endblock %}</h1>
     <div style="width: 50%; margin: auto">
         <!--{% for engineer in engineers %}
