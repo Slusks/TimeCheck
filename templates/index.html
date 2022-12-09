@@ -48,48 +48,19 @@
           
           
           <div id="rigForm">
-          <label>Category: </label>
-          <select name="CategoryInput" id="project">
-            {% for proj in data['jobs']['projects'] %}
-            <option name="ProjectInput" value={{proj}}>{{proj}}</option>
-            {% endfor %}
-          </select>
+
           <!--https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_cascading_dropdown-->
-          
-          <label>SHOP</label>
-          <select name="shop" id="shop">
-            {% for shop in data['rigData'] %}
-            <option name="ShopInput" value={{shop}}>{{shop}}</option>
-            {% endfor %}
-          </select>
-          
-          <label>RIG</label>
-          <select name="rig" id="rig">
-          {% for shop in data['rigData'] %}
-            {% for rig in data['rigData'][shop] %}
-            <option name="RigInput" value={{rig}}>{{rig}}</option>
-            {% endfor %}
-          {% endfor %}
-          </select>
-          
-          <label>PROJECT</label>
-          <select name="project" id="project">
-            {% for project in data['projectData'] %}
-            <option name="ProjectInput" value={{project}}>{{project}}</option>
-            {% endfor %}
-          </select>
-          <br><br>
 
           <!-- THIS IS THE ONE I WANT TO PLAY WITH-->
-          Category: <select name="subject" id="lvl1">
+          <label>Category: </label><select name="subject" id="lvl1">
             <option value="" selected="selected">Select subject</option>
           </select>
           <br><br>
-          SHOP: <select name="topic" id="lvl2">
+          <label>Shop/Status: </label><select name="topic" id="lvl2">
             <option value="" selected="selected">Please select subject first</option>
           </select>
           <br><br>
-          RIGS: <select name="chapter" id="lvl3">
+          <label>Rig/Project </label><select name="chapter" id="lvl3">
             <option value="" selected="selected">Please select topic first</option>
           </select>
 
@@ -132,8 +103,12 @@
     //Create functions for showing project and rig menus as needed
     let Troubleshooting = '{{data["rigData"] | tojson}}';
     let Project = '{{data["projectData"] | tojson}}';
-    var subjectObject = {Troubleshooting, Project};
-    console.log(subjectObject)
+    var subjectObject = JSON.parse('{{data["allData"] | tojson | safe}}');
+/*
+    console.log(Troubleshooting)
+    console.log(Project)
+    console.log('subjectObject=', subjectObject)
+*/
     shopMenu = "TBD"
     rigMenu = "TBD"
     projectMenu = "TBD"
@@ -144,26 +119,25 @@
 
 ///////Menu Manager //////
 
-  window.onload = function() {
+window.onload = function() {
   var subjectSel = document.getElementById("lvl1");
   var topicSel = document.getElementById("lvl2");
   var chapterSel = document.getElementById("lvl3");
-  for (var i in subjectObject) {
-    for (x in i){
+  for (var x in subjectObject) {
     subjectSel.options[subjectSel.options.length] = new Option(x, x);
   }
   subjectSel.onchange = function() {
-    //empty Chapters- and Topics- dropdowns
-    chapterSel.length = 1;
-    topicSel.length = 1;
+   //empty Chapters- and Topics- dropdowns
+   chapterSel.length = 1;
+   topicSel.length = 1;
     //display correct values
     for (var y in subjectObject[this.value]) {
       topicSel.options[topicSel.options.length] = new Option(y, y);
     }
   }
   topicSel.onchange = function() {
-    //empty Chapters dropdown
-    chapterSel.length = 1;
+   //empty Chapters dropdown
+   chapterSel.length = 1;
     //display correct values
     var z = subjectObject[subjectSel.value][this.value];
     for (var i = 0; i < z.length; i++) {
@@ -171,7 +145,6 @@
     }
   }
 }
-  }
 
 
     //

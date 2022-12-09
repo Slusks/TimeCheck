@@ -1,6 +1,6 @@
 #Original test file from: https://www.digitalocean.com/community/tutorials/how-to-use-templates-in-a-flask-application
 
-from flask import Flask, abort, render_template, request, url_for
+from flask import Flask, abort, render_template, request, url_for, jsonify
 from markupsafe import escape
 import getpass
 import os
@@ -11,7 +11,7 @@ import csv
 from csv import DictWriter
 from pathlib import Path
 import pandas as pd
-
+import json
 import PYcontroller #This is going to be the controller file. Yay for refactoring!
 
 
@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[2]
+location = computers[0]
 
 
 
@@ -44,7 +44,9 @@ def home():
         'engineer':engineer,
         'jobs':jobs,
         'rigData': rigData,
-        'projectData': activeProjectData
+        'projectData': ProjectData,
+        #'allData': json.dumps(allData, indent=4)
+        'allData': allData
     }
     if request.method == "POST":
         subject = request.form.get("CategoryInput")
@@ -167,7 +169,7 @@ full_hours = pd.read_csv(file2)
 
 
             
-
+####################################################################################################
 ##REPLACING THE ABOVE SCRIPT FOR ACCESSING THE CONTROLLER FILE
 user = os.getlogin()
 engineer = [user, PYcontroller.engineers[location][user]]
@@ -184,8 +186,11 @@ for i in PYcontroller.task:
 print("categoryRig", categoryRig)
 jobs = {"category":categoryShop, "projects":categoryRig}
 
-rigData = PYcontroller.task[2]["Troubleshooting"]
-activeProjectData = PYcontroller.task[3]["project"]["active"]
+training = PYcontroller.task[0]
+rigData = PYcontroller.task[1]["Troubleshooting"]
+ProjectData = PYcontroller.task[2]["project"]
+allData = {"Training": training , "Troubleshooting": rigData, "Project":ProjectData}
+print("allData", allData)
 #################################
 
             

@@ -11,8 +11,7 @@ category = [
 ]
 
 task = [
-        "Select",
-        {"training":["Computer Based", "Classroom", "Offsite"]
+        {"Training":["Computer Based", "Classroom", "Offsite"]
         },
         {"Troubleshooting":{
             'ACT':[
@@ -66,7 +65,7 @@ engineers= {
         "home": {
                 "Bill":"Shop",
                 "Nate":"Rig",
-                "sam":"Shop",
+                "sam":"Rig",
                 "Adrian":"Rig",
                 "Trevor":"Shop"},
         "laptop": {
