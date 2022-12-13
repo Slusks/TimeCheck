@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[1]
 
 
 
@@ -49,26 +49,72 @@ def home():
         'allData': allData
     }
     if request.method == "POST":
+        ##Shop only items
+        team = request.form.get("team")
         subject = request.form.get("CategoryInput")
-        if subject == "Select":
-            print("STAAAAHP")
-            pass
-        else:
-            dateWorked = request.form.get("workedDate")
-            hours = request.form.get("HourInput")
-            comment = request.form.get("commentInput")
-            timestamp =datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
+        dateWorked = request.form.get("workedDate")
+        hours = request.form.get("HourInput")
+        comment = request.form.get("commentInput")
+        timestamp = datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
+        if team == "shop":
+            print("team:",  team)
             payload = {"timestamp": timestamp,
-                        "subject": subject,
+                        "category": subject,
+                        "shop": "NA-SHOP",
+                        "status": "NA-SHOP",
+                        "type": "NA-SHOP",
+                        "rig": "NA-SHOP",
+                        "project": "NA-SHOP",
+                        "desc": "NA-SHOP",
                         "dateWorked": dateWorked,
                         "hours": hours,
                         "comment": comment,
                         "engineer":engineer[0],
-                        "team": engineer[1]
-                        }
-            update_csv(file2, payload)
+                        "team": team
+                        } 
+            print("payload:", payload)   
+        elif team == "rig":
+            category = request.form.get("lvl1")
+            print("team: ", team)
+            print("category: ", category)
+            if category == "Project":
+                shop = "NA"
+                status = request.form.get("lvl2")
+                type = "NA"
+                rig = "NA"
+                project = request.form.get("lvl3")
+                desc = "NA"
+            elif category == "Admin":
+                shop = "NA"
+                status = "NA"
+                type = request.form.get("lvl2")
+                rig = "NA"
+                project = "NA" 
+                desc = request.form.get("lvl3")
+            elif category == "Troubleshooting":
+                print("category is Troubleshooting")
+                shop = request.form.get("lvl2")
+                status = "NA"
+                type = "NA"
+                rig = request.form.get("lvl3")
+                project = "NA" 
+                desc = "NA"                  
+                payload = {"timestamp": timestamp,
+                            "category": category,
+                            "shop": shop,
+                            "status": status,
+                            "type": type,
+                            "rig": rig,
+                            "project": project,
+                            "desc": desc,
+                            "dateWorked": dateWorked,
+                            "hours": hours,
+                            "comment": comment,
+                            "engineer":engineer[0],
+                            "team": team
+                            }            
+        update_csv(file2, payload)
         
-        #print("output: ", subject, dayWorked, hour, comment, timestamp)
     return render_template('index.html', data=data)
 
 @app.route('/engineers/')
@@ -186,10 +232,10 @@ for i in PYcontroller.task:
 print("categoryRig", categoryRig)
 jobs = {"category":categoryShop, "projects":categoryRig}
 
-training = PYcontroller.task[0]
+admin = PYcontroller.task[0]["Admin"]
 rigData = PYcontroller.task[1]["Troubleshooting"]
 ProjectData = PYcontroller.task[2]["project"]
-allData = {"Training": training , "Troubleshooting": rigData, "Project":ProjectData}
+allData = {"Admin": admin , "Troubleshooting": rigData, "Project":ProjectData}
 print("allData", allData)
 #################################
 

@@ -11,8 +11,13 @@ category = [
 ]
 
 task = [
-        {"Training":["Computer Based", "Classroom", "Offsite"]
-        },
+        {"Admin":{
+            "Training":[
+                "Computer Based", 
+                "Classroom", 
+                "Offsite"
+            ]
+        }},
         {"Troubleshooting":{
             'ACT':[
                 "MONR-ACT-001",
