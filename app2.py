@@ -45,7 +45,6 @@ def home():
         'jobs':jobs,
         'rigData': rigData,
         'projectData': ProjectData,
-        #'allData': json.dumps(allData, indent=4)
         'allData': allData
     }
     if request.method == "POST":
@@ -71,48 +70,47 @@ def home():
                         "comment": comment,
                         "engineer":engineer[0],
                         "team": team
-                        } 
-            print("payload:", payload)   
+                        }    
         elif team == "rig":
-            category = request.form.get("lvl1")
+            category = request.form.get("subject")
             print("team: ", team)
             print("category: ", category)
             if category == "Project":
                 shop = "NA"
-                status = request.form.get("lvl2")
+                status = request.form.get("topic")
                 type = "NA"
                 rig = "NA"
-                project = request.form.get("lvl3")
+                project = request.form.get("chapter")
                 desc = "NA"
             elif category == "Admin":
                 shop = "NA"
                 status = "NA"
-                type = request.form.get("lvl2")
+                type = request.form.get("topic")
                 rig = "NA"
                 project = "NA" 
-                desc = request.form.get("lvl3")
+                desc = request.form.get("chapter")
             elif category == "Troubleshooting":
                 print("category is Troubleshooting")
-                shop = request.form.get("lvl2")
+                shop = request.form.get("topic")
                 status = "NA"
                 type = "NA"
-                rig = request.form.get("lvl3")
+                rig = request.form.get("chapter")
                 project = "NA" 
                 desc = "NA"                  
-                payload = {"timestamp": timestamp,
-                            "category": category,
-                            "shop": shop,
-                            "status": status,
-                            "type": type,
-                            "rig": rig,
-                            "project": project,
-                            "desc": desc,
-                            "dateWorked": dateWorked,
-                            "hours": hours,
-                            "comment": comment,
-                            "engineer":engineer[0],
-                            "team": team
-                            }            
+            payload = {"timestamp": timestamp,
+                        "category": category,
+                        "shop": shop,
+                        "status": status,
+                        "type": type,
+                        "rig": rig,
+                        "project": project,
+                        "desc": desc,
+                        "dateWorked": dateWorked,
+                        "hours": hours,
+                        "comment": comment,
+                        "engineer":engineer[0],
+                        "team": team
+                        }            
         update_csv(file2, payload)
         
     return render_template('index.html', data=data)
