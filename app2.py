@@ -14,7 +14,7 @@ import pandas as pd
 import json
 import PYcontroller #This is going to be the controller file. Yay for refactoring!
 
-
+pd.set_option('display.max_columns', 20)
 
 
 app = Flask(__name__)
@@ -216,7 +216,7 @@ full_hours = pd.read_csv(file2)
 ####################################################################################################
 ##REPLACING THE ABOVE SCRIPT FOR ACCESSING THE CONTROLLER FILE
 user = os.getlogin()
-engineer = [user, PYcontroller.engineers[location][user]]
+engineer = [user, PYcontroller.engineers[location][user][0]]
 #engineers = [key for d in PYcontroller.engineers for key in d.keys()]
 #print("engineer", engineer)
 categoryShop = PYcontroller.category
@@ -273,7 +273,7 @@ def thisWeek(filename):
     print("WeekNum:", weekNum)
     week = weekDict[weekNum]
     df = pd.read_csv(filename)
-    this_week = df.loc[df['dateworked'].isin(week)]
+    this_week = df.loc[df["dateworked"].isin(week)]
     this_week_formatted = this_week.groupby(['category','dateworked']).hours.sum().unstack().fillna("")
     for i in week:
         if i not in this_week_formatted.columns:

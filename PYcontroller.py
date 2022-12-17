@@ -68,22 +68,22 @@ task = [
     ]
 engineers= {
         "home": {
-                "Bill":"Shop",
-                "Nate":"Rig",
-                "sam":"Rig",
-                "Adrian":"Rig",
-                "Trevor":"Shop"},
+                "Bill":["Shop", "user"],
+                "Nate":["Rig", "user"],
+                "sam":["Rig", "admin"],
+                "Adrian":["Rig", "user"],
+                "Trevor":["Shop", "user"]},
         "laptop": {
-                "Bill":"Shop",
-                "Nate":"Rig",
-                "samsl":"Rig",
-                "Adrian":"Rig",
-                "Trevor":"Shop"},
+                "Bill":["Shop", "user"],
+                "Nate":["Rig", "user"],
+                "samsl":["Rig", "admin"],
+                "Adrian":["Rig", "user"],
+                "Trevor":["Shop", "user"]},
         "work": {
-                "Bill":"Shop",
-                "Nate":"Rig",
-                "40001073":"Shop",
-                "Adrian":"Rig",
-                "Trevor":"Shop"}
+                "Bill":["Shop", "user"],
+                "Nate":["Rig", "user"],
+                "4001073":["Rig", "admin"],
+                "Adrian":["Rig", "user"],
+                "Trevor":["Shop", "user"]}
 }
     
