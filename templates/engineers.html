@@ -3,22 +3,47 @@
 <nav>
     <a href="/" name='formpage' style="color:white">Home</a>
     <a href="{{url_for('timekeeper')}}" name='timekeeper' style="color: white">Timekeeper</a>
-    <a href="{{url_for('engineers')}}" name='admin' style="color:hsl(353, 85%, 44%); font-weight: bold; text-shadow: 1px 1px  black;" >Administration</a>
+    <a href="{{url_for('administration')}}" name='admin' style="color:hsl(353, 85%, 44%); font-weight: bold; text-shadow: 1px 1px  black;" >Administration</a>
     <span class="nav-right"><img id='logo' src="{{url_for('static', filename='White Logo.png')}}"></span>
   </nav>
   <br>
+
     <h1>{% block title %} Engineers {% endblock %}</h1>
-    <div style="width: 50%; margin: auto">
-        <!--{% for engineer in engineers %}
-            {% if loop.index % 2 == 0 %}
-                {% set bg_color = '#e6f9ff' %}
-            {% else %}
-                {% set bg_color = '#eee' %}
-        {% endif %}-->
-        <div style="padding: 10px; background-color: {{loop.cycle('#EEE', '#e6f9ff')}}; margin: 20px">
-            <p>#{{ loop.index }}</p>
-            <p style="font-size: 24px">{{ engineer }} is an engineer in our group</p>
+
+    <div style="width: 50%; margin: auto" id="form-container">
+        <form action="{{url_for('administration')}}" method="post" name="engineers">
+        <h2> Change Engineer</h2>
+        <div id="engineerForm">
+            <div style="display:flex;">
+                <input type="radio" id="add" name="function" value="add" checked="checked">
+                <label for="add"> Add</label>
+                <input type="radio" id="remove" name="function" value="remove" >
+                <label for="remove"> Remove</label>
+              </div>
+        <div>
+            <label>Active Engineers: </label>
+            <select name="EngineerInput" id="engineer">
+            {% for dict_item in data["engineers"] %}
+              
+                
+              <option  value="{{item}}">{{dict_item}}</option>
+
+                
+            {% endfor %}
+            </select>
         </div>
-        {% endfor %}
+        
+        </div>
+        </form>
+    </div>
+
+
+
+
+
+    <div style="width: 50%; margin: auto">
+        <h2>{{data["engineers"]}}</h2>
+        <h2>{{data["rigTeam"]}}</h2>
+        <h2>{{data["shopTeam"]}}</h2>
     </div>
 {% endblock %}

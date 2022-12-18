@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[1]
+location = computers[0]
 
 
 
@@ -115,14 +115,14 @@ def home():
         
     return render_template('index.html', data=data)
 
-@app.route('/engineers/')
-def engineers():
-    engineers = ["Trevor",
-                "Bill",
-                "Nate",
-                "Sam",
-                "Ezekiel"]
-    return render_template("engineers.html", engineers=engineers)
+@app.route('/administration/')
+def administration():
+    data= {
+        "engineers": control_engineers[location],
+        "rigTeam": control_rig,
+        "shopTeam": control_shop
+    }
+    return render_template("engineers.html", data=data)
 
 @app.route('/timekeeper/', methods=["GET","POST"])
 def timekeeper():
@@ -234,8 +234,17 @@ admin = PYcontroller.task[0]["Admin"]
 rigData = PYcontroller.task[1]["Troubleshooting"]
 ProjectData = PYcontroller.task[2]["project"]
 allData = {"Admin": admin , "Troubleshooting": rigData, "Project":ProjectData}
-print("allData", allData)
 #################################
+
+#######################################
+#New set of functions for controlling data in controller file
+
+control_shop = PYcontroller.category
+print(control_shop)
+control_rig = PYcontroller.task
+print(control_rig)
+control_engineers = PYcontroller.engineers
+print(control_engineers)
 
             
 #Function that drops submitted data to a csv.

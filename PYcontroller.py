@@ -68,22 +68,22 @@ task = [
     ]
 engineers= {
         "home": {
-                "Bill":["Shop", "user"],
-                "Nate":["Rig", "user"],
-                "sam":["Rig", "admin"],
-                "Adrian":["Rig", "user"],
-                "Trevor":["Shop", "user"]},
+                "Bill":["Shop", "user", "active"],
+                "Nate":["Rig", "user", "active"],
+                "sam":["Rig", "admin", "active"],
+                "Adrian":["Rig", "user", "active"],
+                "Trevor":["Shop", "user", "active"]},
         "laptop": {
-                "Bill":["Shop", "user"],
-                "Nate":["Rig", "user"],
-                "samsl":["Rig", "admin"],
-                "Adrian":["Rig", "user"],
-                "Trevor":["Shop", "user"]},
+                "Bill":["Shop", "user", "active"],
+                "Nate":["Rig", "user", "active"],
+                "samsl":["Rig", "admin", "active"],
+                "Adrian":["Rig", "user", "active"],
+                "Trevor":["Shop", "user", "active"]},
         "work": {
-                "Bill":["Shop", "user"],
-                "Nate":["Rig", "user"],
-                "4001073":["Rig", "admin"],
-                "Adrian":["Rig", "user"],
-                "Trevor":["Shop", "user"]}
+                "Bill":["Shop", "user", "active"],
+                "Nate":["Rig", "user", "active"],
+                "4001073":["Rig", "admin", "active"],
+                "Adrian":["Rig", "user", "active"],
+                "Trevor":["Shop", "user", "active"]}
 }
     
