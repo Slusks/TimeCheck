@@ -23,12 +23,9 @@
         <div>
             <label>Active Engineers: </label>
             <select name="EngineerInput" id="engineer">
-            {% for dict_item in data["engineers"] %}
-              
-                
-              <option  value="{{item}}">{{dict_item}}</option>
-
-                
+            {% for engineer in data["engineers"] %} 
+    
+              <option  value="{{value}}">{{data["engineers"][engineer]}}</option>
             {% endfor %}
             </select>
         </div>

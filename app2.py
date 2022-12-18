@@ -118,7 +118,7 @@ def home():
 @app.route('/administration/')
 def administration():
     data= {
-        "engineers": control_engineers[location],
+        "engineers": dict(control_engineers[location]),
         "rigTeam": control_rig,
         "shopTeam": control_shop
     }
