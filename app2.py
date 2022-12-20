@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[1]
 
 
 
@@ -120,7 +120,10 @@ def administration():
     data= {
         "engineers": dict(control_engineers[location]),
         "rigTeam": control_rig,
-        "shopTeam": control_shop
+        "shopTeam": control_shop,
+        'role': PYcontroller.engineers[location][user][1],
+        'rigData': rigData,
+        'allData': allData
     }
     return render_template("engineers.html", data=data)
 
