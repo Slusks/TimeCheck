@@ -20,12 +20,35 @@ task = [
         }},
         {"Troubleshooting":{
             'ACT':[
-                "MONR-ACT-001",
-                "MONR-ACT-002",
-                "MONR-ACT-003",
-                "MONR-ACT-004",
-                "MONR-ACT-005",
-                "MONR-ACT-006"
+                "MONR-ACT-001 GO-NOGO GAGE/ PRESSURE GAGE",
+                "MONR-ACT-002 AMV RIG",
+                "MONR-ACT-003 A310 TORQUE LIMITERS",
+                "MONR-ACT-004 LOW STATIC PRESSURE",
+                "MONR-ACT-005 THSA TEST BOX",
+                "MONR-ACT-006 THSA TEST BOX",
+                "MONR-ACT-007 UNIV TEST RIG",
+                "MONR-ACT-008 THSA MODULE BOX",
+                "MONR-ACT-009 YAW DAMPER",
+                "MONR-ACT-010 A320 SERVO CONTROL",
+                "MONR-ACT-011 PRESS",
+                "MONR-ACT-012 LANDING GEAR ACTUATION TS",
+                "MONR-ACT-014 STJE/TJE 0-5000 PSI PRESS XDUCERS",
+                "MONR-ACT-015 UNIVERSAL SKYDROL ACTUATOR TEST RIG",
+                "MONR-ACT-016 SERVO TEST RIG",
+                "MONR-ACT-017 SERVO TEST BOX",
+                "MONR-ACT-018 6-PORT UNIV TEST RIG",
+                "MONR-ACT-019 THSA TEST RIG",
+                "MONR-ACT-020 HYDRAULIC ACTUATORS",
+                "MONR-ACT-021 MICRO-SWITCH TESTER",
+                "MONR-ACT-022 4-PORT UNIV TEST RIG",
+                "MONR-ACT-023 C12 FUEL PUMP TEST RIG",
+                "MONR-ACT-024 THSA TEST BOX",
+                "MONR-ACT-025 LG ACTUATOR TEST BOX",
+                "MONR-ACT-026 A320 SERVO-CONTROL",
+                "MONR-ACT-027 SERVO TEST BOX",
+                "MONR-ACT-028 SERVO TEST BOX",
+                "MONR-ACT-029 FLAP ACTUATOR",
+                "MONR-ACT-030 A310 FLAP TEST RIG"
             ],
             "CARGO":[
                 "MONR-CAR-001"
@@ -80,10 +103,10 @@ engineers= {
                 "Adrian":["Rig", "user", "active"],
                 "Trevor":["Shop", "user", "active"]},
         "work": {
-                "Bill":["Shop", "user", "active"],
-                "Nate":["Rig", "user", "active"],
-                "4001073":["Rig", "admin", "active"],
-                "Adrian":["Rig", "user", "active"],
-                "Trevor":["Shop", "user", "active"]}
+                "Bill":["Shop", "user", "active", "Bill"],
+                "Nate":["Rig", "user", "active", "Nate"],
+                "40001073":["Shop", "admin", "active", "Sam"],
+                "Adrian":["Rig", "user", "active", "Adrian"],
+                "Trevor":["Shop", "user", "active", "Trevor"]}
 }
     
