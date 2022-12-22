@@ -97,16 +97,16 @@ engineers= {
                 "Adrian":["Rig", "user", "active"],
                 "Trevor":["Shop", "user", "active"]},
         "laptop": {
-                "Bill":["Shop", "user", "active"],
-                "Nate":["Rig", "user", "active"],
-                "samsl":["Rig", "admin", "active"],
-                "Adrian":["Rig", "user", "active"],
-                "Trevor":["Shop", "user", "active"]},
+                "Bill":["Shop", "user", "active", "Bill"],
+                "Nate":["Rig", "user", "active", "Nate"],
+                "samsl":["Shop", "admin", "active", "Sam"],
+                "Garrett":["Rig", "user", "active", "Garrett"],
+                "Trevor":["Shop", "user", "active", "Trevor"]},
         "work": {
                 "Bill":["Shop", "user", "active", "Bill"],
                 "Nate":["Rig", "user", "active", "Nate"],
                 "40001073":["Shop", "admin", "active", "Sam"],
-                "Adrian":["Rig", "user", "active", "Adrian"],
+                "Garrett":["Rig", "user", "active", "Garrett"],
                 "Trevor":["Shop", "user", "active", "Trevor"]}
 }
     

@@ -27,7 +27,7 @@
             <select name="EngineerInput" id="engineer">
             {% for engineer in data["engineers"] %} 
               {% if data["engineers"][engineer][2] == "active" %}
-              <option  value="{{engineer}}">{{engineer}}</option>
+              <option  value="{{data['engineers'][engineer][3]}}">{{data["engineers"][engineer][3]}}</option>
               {% endif %}
             {% endfor %}
               <option value="New"> New </option>

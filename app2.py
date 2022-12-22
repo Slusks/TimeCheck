@@ -51,7 +51,11 @@ def home():
         ##Shop only items
         team = request.form.get("team")
         subject = request.form.get("CategoryInput")
-        dateWorked = request.form.get("workedDate")
+        if len(request.form.get("workedDate")) <=0:
+            dateWorked = date_time_str_rev
+            print("date worked", dateWorked)
+        else:
+            dateWorked = request.form.get("workedDate")
         hours = request.form.get("HourInput")
         comment = request.form.get("commentInput")
         timestamp = datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
@@ -159,6 +163,9 @@ def timekeeper():
 #easy to use date/time variables
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S") # returns todays date
+date_time_str_rev = now.strftime("%Y-%m-%d")
+print("date_time_str", date_time_str)
+print("date_time_str", date_time_str[0:10])
 today = calendar.day_name[now.weekday()] # returns today
 month = calendar.month_name[now.weekday()]
 dates = datetime.date
@@ -219,18 +226,18 @@ full_hours = pd.read_csv(file2)
 ####################################################################################################
 ##REPLACING THE ABOVE SCRIPT FOR ACCESSING THE CONTROLLER FILE
 user = os.getlogin()
-engineer = [user, PYcontroller.engineers[location][user][0]]
+engineer = [user, PYcontroller.engineers[location][user]]
 #engineers = [key for d in PYcontroller.engineers for key in d.keys()]
-#print("engineer", engineer)
+print("engineer", engineer)
 categoryShop = PYcontroller.category
-print("categoryShop", categoryShop)
+#print("categoryShop", categoryShop)
 categoryRig=[]
 for i in PYcontroller.task:
     if type(i) == str:
         categoryRig.append(i)
     elif type(i) == dict:
         categoryRig.append(list(i.keys())[0])
-print("categoryRig", categoryRig)
+#print("categoryRig", categoryRig)
 jobs = {"category":categoryShop, "projects":categoryRig}
 
 admin = PYcontroller.task[0]["Admin"]
