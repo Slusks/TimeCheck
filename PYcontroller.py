@@ -76,7 +76,9 @@ task = [
             ],
             "Lighting":[
                 "MONR-LIT-001"
-            ]
+            ],
+            "New" :
+            []
         }},
         {"project":{
             "active":[
@@ -91,11 +93,11 @@ task = [
     ]
 engineers= {
         "home": {
-                "Bill":["Shop", "user", "active"],
-                "Nate":["Rig", "user", "active"],
-                "sam":["Rig", "admin", "active"],
-                "Adrian":["Rig", "user", "active"],
-                "Trevor":["Shop", "user", "active"]},
+                "Bill":["Shop", "user", "active", "Bill"],
+                "Nate":["Rig", "user", "active", "Nate"],
+                "sam":["Shop", "admin", "active", "Sam"],
+                "Garrett":["Rig", "user", "active", "Garrett"],
+                "Trevor":["Shop", "user", "active", "Trevor"]},
         "laptop": {
                 "Bill":["Shop", "user", "active", "Bill"],
                 "Nate":["Rig", "user", "active", "Nate"],

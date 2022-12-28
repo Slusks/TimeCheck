@@ -11,7 +11,7 @@
     <h1>{% block title %} Administrative Functions {% endblock %}</h1>
 <!----------------------------------------------->
     <div style="width: 50%; margin: auto" id="form-container1">
-        <form action="{{url_for('administration')}}" method="post" name="changeEngineer">
+        <form action="{{url_for('administration')}}" method="post" name="changeEngineer" id="changeEngineer">
         <h2> Change Engineer</h2>
         <div id="engineerChangeType">
             <div style="display:flex;">
@@ -49,14 +49,15 @@
                 {% endif %}
               </select>
             </div>
+            <!---------------------------------------------------->
         </div>     
         </div>
-        <button type="submit" style="max-width: 10%; margin-top: 3%;" id="submitButton">Submit</button>
+        <input type="submit" style="max-width: 10%; margin-top: 3%;" id="changeEngineer" name="changeEngineer">
         </form>
     </div>
     <hr><!----------------------------------------------->
     <div style="width: 50%; margin: auto" id="form-container2">
-      <form action="{{url_for('administration')}}" method="post" name="shopCategories">
+      <form action="{{url_for('administration')}}" method="post" name="shopCategories" id="shopCategories">
       <h2>Shop Categories</h2>
       <div id="shopCategories">
         <div style="display:flex;">
@@ -79,33 +80,39 @@
             <input type="text" id="shopCategoryName" name="shopCategoryName">
           </div>
         </div>
-        <button type="submit" style="max-width: 10%; margin-top: 3%;" id="submitButton">Submit</button>
+        <input type="submit" style="max-width: 10%; margin-top: 3%;" id="shopCategories" name="shopCategories">
       </form>
     </div>
     <hr><!----------------------------------------------->
     <div style="width: 50%; margin: auto" id="form-container3">
-      <form action="{{url_for('administration')}}" method="post" name="rigUpdates">
+      <form action="{{url_for('administration')}}" method="post" name="rigUpdates" id="rigUpdates">
       <h2> Rig Updates</h2>
 
       <label>Shop </label><select name="topic" id="lvl1">
         <option value="" selected="selected">Select Shop</option>
       </select>
       <br><br>
+      <div id="rigSelect">
       <label>Rig </label><select name="chapter" id="lvl2">
         <option value="" selected="selected">Select Rig</option>
       </select>
-      
+      </div>
 
-
-
-
+                  <!-- This should only appear when none is selected-->
+                  <div id="newRig" style="display:none;">
+                    <label>Shop:</label>
+                    <input type="text" id="RigShop" name="RigInput">
+                    <label>Description: </label>
+                     <input name="rigDescription" id="rig" type="text" id="rigDescription">
+                  </div>
+                  <!---------------------------------------------------->
       <br>
-      <button type="submit" style="max-width: 10%; margin-top: 3%;" id="submitButton">Submit</button>
+      <input type="submit" style="max-width: 10%; margin-top: 3%;" id="rigUpdates" name="rigUpdates">
       </form>
     </div>
     <hr><!----------------------------------------------->
     <div style="width: 50%; margin: auto" id="form-container3">
-      <form action="{{url_for('administration')}}" method="post" name="rigProjects">
+      <form action="{{url_for('administration')}}" method="post" name="rigProjects" id="rigProjects">
       <h2> Rig Projects</h2>
       <div id="rigProjects">
         <div style="display:flex;">
@@ -129,7 +136,7 @@
             <input type="text" id="newProjectName" name="newProject">
           </div>
         </div>
-        <button type="submit" style="max-width: 10%; margin-top: 3%;" id="submitButton">Submit</button>
+        <input type="submit" style="max-width: 10%; margin-top: 3%;" id="rigProjects" name="rigProjects">
       
       </form>
     </div>
@@ -156,14 +163,23 @@
 
   //SHOP CATEGORY CONTROLS
   //Displays the New Input items when dropdown is changed
-  
-   document.getElementById('shopCategoryList').addEventListener('change',
+   document.getElementById('lvl1').addEventListener('change',
    function() {
     var style = this.value == "New" ? 'block' : 'none';
-    document.getElementById('newShopCategory').style.display = style
+    var style2 = this.value == "New" ? 'none' : 'block';
+    document.getElementById('newRig').style.display = style
+    document.getElementById("rigSelect").style.display = style2
    })
 
    //Rig Data Controls
+   document.getElementById('shopCategoryList').addEventListener('change',
+   function() {
+    var style = this.value == "New" ? 'block' : 'none';
+
+    document.getElementById('newShopCategory').style.display = style
+
+   })
+
    let Troubleshooting = JSON.parse('{{data["rigData"] | tojson | safe}}');
    console.log('rig data:', Troubleshooting)
    var subjectObject = JSON.parse('{{data["allData"] | tojson | safe}}');

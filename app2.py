@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[1]
+location = computers[0]
 
 
 
@@ -119,7 +119,7 @@ def home():
         
     return render_template('index.html', data=data)
 
-@app.route('/administration/')
+@app.route('/administration/', methods=["GET","POST"] )
 def administration():
     data= {
         "engineers": dict(control_engineers[location]),
@@ -129,7 +129,27 @@ def administration():
         'rigData': rigData,
         'allData': allData
     }
-    return render_template("engineers.html", data=data)
+
+    if request.method == "POST":
+        if "changeEngineer" in request.form:
+            print("changeEngineer")
+            pass
+        if "shopCategories" in request.form:
+            print("shopCategories")
+            pass
+        if "rigUpdates" in request.form:
+            print("rigUpdates")
+            pass
+        if "rigProjects" in request.form:
+            print("rigProjects")
+            pass
+        else:
+            print(request.form)
+
+
+
+
+    return render_template("administration.html", data=data)
 
 @app.route('/timekeeper/', methods=["GET","POST"])
 def timekeeper():
@@ -164,8 +184,8 @@ def timekeeper():
 now = datetime.datetime.now()
 date_time_str = now.strftime("%m-%d-%Y %H:%M:%S") # returns todays date
 date_time_str_rev = now.strftime("%Y-%m-%d")
-print("date_time_str", date_time_str)
-print("date_time_str", date_time_str[0:10])
+#print("date_time_str", date_time_str)
+#print("date_time_str", date_time_str[0:10])
 today = calendar.day_name[now.weekday()] # returns today
 month = calendar.month_name[now.weekday()]
 dates = datetime.date
@@ -250,11 +270,11 @@ allData = {"Admin": admin , "Troubleshooting": rigData, "Project":ProjectData}
 #New set of functions for controlling data in controller file
 
 control_shop = PYcontroller.category
-print(control_shop)
+#print("contol_shop: ", control_shop)
 control_rig = PYcontroller.task
-print(control_rig)
+#print("control_rig: ", control_rig)
 control_engineers = PYcontroller.engineers
-print(control_engineers)
+#print("control_engineers: ",control_engineers)
 
             
 #Function that drops submitted data to a csv.
