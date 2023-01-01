@@ -48,7 +48,7 @@ def home():
         'allData': allData
     }
     if request.method == "POST":
-        ##Shop only items
+        ##Shop only items .get(name)
         team = request.form.get("team")
         subject = request.form.get("CategoryInput")
         if len(request.form.get("workedDate")) <=0:
@@ -129,22 +129,43 @@ def administration():
         'rigData': rigData,
         'allData': allData
     }
-
+    #.get(name)
     if request.method == "POST":
         if "changeEngineer" in request.form:
+            engineer_name = request.form.get('EngineerInput')
+            if engineer_name == "New":
+                newEngineerID = request.form.get('engineerIDInput')
+                newTeam = request.form.get('teamInput')
+                newRole = request.form.get('roleInput')
+                newStatus = "active"
+                newEngineerName = request.form.get('engineerName')
+                payload = {
+                    newEngineerID:[
+                        newTeam,
+                        newRole,
+                        newStatus,
+                        newEngineerName
+                    ]}
+            else:
+                payload = "old guy"
+                print ("old guy", engineer_name)  
+
             print("changeEngineer")
-            pass
-        if "shopCategories" in request.form:
+
+            
+        elif "shopCategories" in request.form:
             print("shopCategories")
-            pass
-        if "rigUpdates" in request.form:
+            
+        elif "rigUpdates" in request.form:
             print("rigUpdates")
-            pass
-        if "rigProjects" in request.form:
+            
+        elif "rigProjects" in request.form:
             print("rigProjects")
-            pass
+            
         else:
             print(request.form)
+        
+        print(payload)
 
 
 

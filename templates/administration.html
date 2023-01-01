@@ -27,15 +27,17 @@
             <select name="EngineerInput" id="engineer">
             {% for engineer in data["engineers"] %} 
               {% if data["engineers"][engineer][2] == "active" %}
-              <option  value="{{data['engineers'][engineer][3]}}">{{data["engineers"][engineer][3]}}</option>
+              <option  value="{{data['engineers'][engineer][3]}}" name="engineerName">{{data["engineers"][engineer][3]}}</option>
               {% endif %}
             {% endfor %}
-              <option value="New"> New </option>
+              <option value="New" name="engineerName"> New </option>
             </select>
             <!-- This should only appear when none is selected-->
             <div id="newInfo" style="display:none;">
               <label>Name:</label>
-              <input type="text" id="engineerName" name="EngineerInput">
+              <input type="text" id="engineerName" name="engineerName">
+              <label>Login ID:</label>
+              <input type="text" id="engineerIDInput" name="engineerIDInput">
               <label>Team: </label>
               <select name="teamInput" id="team">
                 <option value="Shop">Shop</option>
