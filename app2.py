@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[0]
+location = computers[2]
 
 
 
@@ -146,9 +146,21 @@ def administration():
                         newStatus,
                         newEngineerName
                     ]}
+                print("new", payload)
             else:
-                payload = "old guy"
-                print ("old guy", engineer_name)  
+                oldEngineerID = request.form.get('oldengineerIDInput')
+                oldTeam = request.form.get('oldteamInput')
+                oldRole = request.form.get('oldroleInput')
+                oldStatus = request.form.get('oldroleInput')
+                oldEngineerName = request.form.get('oldengineerName')
+                payload = {
+                    oldEngineerID:[
+                        oldTeam,
+                        oldRole,
+                        oldStatus,
+                        oldEngineerName
+                    ]}
+                print ("old:", payload)  
 
             print("changeEngineer")
 

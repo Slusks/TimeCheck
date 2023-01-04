@@ -27,12 +27,37 @@
             <select name="EngineerInput" id="engineer">
             {% for engineer in data["engineers"] %} 
               {% if data["engineers"][engineer][2] == "active" %}
-              <option  value="{{data['engineers'][engineer][3]}}" name="engineerName">{{data["engineers"][engineer][3]}}</option>
+              <div id="engineerIDKey" style="display:none;">{{data["engineers"][engineer]}}</div>
+              <option  value="{{data['engineers'][engineer]}}" name="engineerName" id="engineerID">{{data["engineers"][engineer][3]}}</option>
               {% endif %}
             {% endfor %}
               <option value="New" name="engineerName"> New </option>
             </select>
-            <!-- This should only appear when none is selected-->
+              <!-- This should prepopulate with the information of the engineer selected and should go away when New is selected-->
+              <div id="updateInfo" style="display:block;">
+                <label>Name:</label>
+                <input type="text" id="oldengineerName" name="oldengineerName">
+                <label>Login ID:</label>
+                <input type="text" id="oldengineerIDInput" name="oldengineerIDInput">
+                <label>Team: </label>
+                <select name="oldteamInput" id="oldteamInput">
+                  <option value="Shop">Shop</option>
+                  <option value="Rig">Rig</option>
+                </select>
+                <select name="oldteamStatus" id="oldteamStatus">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+                <label>Role:</label>
+                <select name="oldroleInput" id="oldroleInput"> <!--This should not change-->
+                  <option value="user">user</option>
+                  {% if data['role'] == 'admin' %}
+                  <option value="admin">admin</option>
+                  {% endif %}
+                </select>
+              </div>
+              <!-- This should prepopulate with the information of the engineer selected and should go away when New is selected-->
+            <!-- This should only appear when New is selected-->
             <div id="newInfo" style="display:none;">
               <label>Name:</label>
               <input type="text" id="engineerName" name="engineerName">
@@ -51,6 +76,7 @@
                 {% endif %}
               </select>
             </div>
+            <!-- This should only appear when New is selected-->
             <!---------------------------------------------------->
         </div>     
         </div>
@@ -148,7 +174,7 @@
 
 
 
-    <div style=" display:none; width: 50%; margin: auto">
+    <div style=" display:block; width: 50%; margin: auto">
         <h2>{{data["engineers"]}}</h2>
         <h2>{{data["rigTeam"]}}</h2>
         <h2>{{data["shopTeam"]}}</h2>
@@ -159,9 +185,48 @@
   //Displays the New Input items when dropdown is changed
   document.getElementById('engineer').addEventListener('change',
    function() {
+
+    function getObjKey(obj, value) {
+      console.log(value)
+      return Object.keys(obj).find(key => obj[key] === value);
+      }
+
     var style = this.value == "New" ? 'block' : 'none';
+    var style2 = this.value == "New" ? 'none' : 'block';
+
+    var engineerArray = this.value;
+    var e = JSON.parse('{{data["engineers"] | tojson | safe}}')
+
+    for (const [k, v] of Object.entries(e)){
+      engineerArray2 = engineerArray.replace(/[^a-zA-Z ]/g, "")
+      engineerArray2 = engineerArray2.replace(/\s+/g,',')
+      //console.log(k, v.toString())
+      //console.log(engineerArray2)
+      if (v.toString() == engineerArray2){
+        var engineerID = k
+      }
+    }
+
+  
+
+
+    console.log("Engineer ID:", engineerID)
+    console.log("selected value:", engineerArray)
+
+    document.getElementById("oldteamInput").defaultValue = engineerArray[0]
+    document.getElementById("oldroleInput").defaultValue = engineerArray[1]
+    document.getElementById("oldteamStatus").defaultValue = engineerArray[2]
+    document.getElementById("oldengineerName").defaultValue = engineerArray[3]
+    document.getElementById("oldengineerIDInput").defaultValue = engineerID
+    
+    
+
+
     document.getElementById('newInfo').style.display = style
+    document.getElementById('updateInfo').style.display = style2
    })
+
+   
 
   //SHOP CATEGORY CONTROLS
   //Displays the New Input items when dropdown is changed
