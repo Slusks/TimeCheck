@@ -1,0 +1,117 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<nav>
+  <a href="/" name='crosstraining' style="color:hsl(353, 85%, 44%); font-weight: bold; text-shadow: 1px 1px  black;">Crosstraining</a>
+  <a href="{{url_for('timekeeper')}}" name='timekeeper' style="color: white">Timekeeper</a>
+  <a href="{{url_for('administration')}}" name='admin' style="color: white" >Administration</a>
+
+  <!--
+  <a href="{{url_for('crosstraining')}}" name='crosstraining' style="color:hsl(353, 85%, 44%); font-weight: bold; text-shadow: 1px 1px  black;">Crosstraining</a>
+  <a href="/" name='formpage' style="color:white; font-weight: bold; text-shadow: 1px 1px  black;">Home</a>
+  <a href="{{url_for('timekeeper')}}" name='timekeeper' style="color: white">Timekeeper</a>
+  
+-->
+  <span class="nav-right"><img id='logo' src="{{url_for('static', filename='White Logo.png')}}"></span>
+</nav>
+<br>
+<div class="containerAutoMargin">
+<div class="container">
+    <h1>Time Tracking v0.3</h1>
+    <h2>Time tracking tool for shop cross training</h2>
+    <h3>Day: {{ data['day'] }}</h3>
+    <!--<h3>Login Time:{{ data['utc_dt'] }}</h3>-->
+    <!--<h3 id="test">Test:</h3>-->
+    <h3 id="user">Engineer Username: {{ data['engineer'][1][3] }}</h3>
+    <h3 id="team">Shop Primary:</h3>
+      {% for shop in data['shopCoverage'][data['engineer'][1][3]] %}
+      <ul>{{shop}}</ul>
+      {% endfor %}
+  </div>
+
+
+  <!-- I want to copy this whole div but make the id something like form-container2, 3, 4, etc.-->
+    <div class="container" id="form-container">
+      <form action="{{ url_for('crosstraining')}}" method="post" name="selection">
+        <!--<div style="display:flex;">
+          <input type="radio" id="crosstrain" name="crosstrain" value="crosstrain" checked>
+          <label for="crosstrain"> CrossTraining</label>
+        </div>-->
+
+        <div>
+        
+          <div id="shopForm">
+            <label>Shop: </label>
+            <select name="shopInput" id="shopInput">
+              {% for shop in data['shopList'] %}
+              <option  value= "{{shop}}">{{shop}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <br>
+
+          <div style="display:flex;">
+            <input type="radio" id="trainer" name="trainerInput" value=True >
+            <label for="trainer"> Trainer</label>
+            <input type="radio" id="trainee" name="trainerInput" value=False >
+            <label for="trainee"> Trainee</label>
+          </div>
+          
+        </div>
+        </div>
+      
+      <div>
+        <br>
+        <label>Date Worked: </label> 
+        <input type="date" name="workedDate" id="workedDate">
+        <div>Default: {{data['utc_dt'][0:10]}}</div>
+      </div>
+      <br>
+      <label>Hours: </label>
+      <input id="hourInput" name="hourInput" type="number" step="0.5" min="0", max="12">
+      <br>
+      <br>
+      <label >Comments: </label>
+      <textarea  id="comments" name="commentInput" placeholder="None" style="width:80%;"></textarea>
+    
+      <br>
+      <button type="submit" style="max-width: 10%; margin-top: 3%;" id="submitButton">Submit</button> <div id="submitMessage" style="visibility:hidden;"> Submitted!!</div>
+      </form>
+      </div>
+      </div>
+    </div>
+    <script>
+    
+    var engineerShops = "{{data['shopCoverage'][data['engineer'][1][3]] | safe}}"
+    console.log(engineerShops)
+    var engineerName = "{{[data['engineer'][1][3]] | safe}}"
+    console.log(engineerName)
+    shopName = document.getElementById('shopInput')
+    console.log(shopName)
+    shopInput.addEventListener("change", (event) => {
+      if (shopName.value in engineerShops){
+        console.log(engineerName, "primary for ", shopName.value)
+      }
+      else {
+        console.log("wtf")
+      }
+        
+    })
+
+
+
+      
+   
+
+
+
+
+
+
+
+
+      
+    </script>
+    </div>
+{% endblock %}

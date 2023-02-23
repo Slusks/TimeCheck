@@ -22,7 +22,7 @@ app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 computers = ['home', 'laptop', 'work']
-location = computers[2]
+location = computers[1]
 
 
 
@@ -35,7 +35,7 @@ location = computers[2]
 #On home computer running the app
 
 
-@app.route('/', methods=["GET","POST"])
+@app.route('/home/', methods=["GET","POST"])
 def home():
     data = {
         'utc_dt':date_time_str,
@@ -118,6 +118,44 @@ def home():
         update_csv(file2, payload)
         
     return render_template('index.html', data=data)
+
+@app.route('/', methods=["GET","POST"])
+def crosstraining():
+    data = {
+        'utc_dt':date_time_str,
+        'day':today,
+        'file':table,
+        'engineer':engineer,
+        'jobs':jobs,
+        'shopList':shopList,
+        'shopCoverage':shopCoverage
+    }
+    if request.method == "POST":
+        shop = request.form.get("shopInput")
+        #This is a helper to make sure a timestamp gets entered
+        if len(request.form.get("workedDate")) <=0:
+            dateWorked = date_time_str_rev
+            print("date worked", dateWorked)
+        else:
+            dateWorked = request.form.get("workedDate")
+        hours = request.form.get("hourInput")
+        comment = request.form.get("commentInput")
+        timestamp = datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")
+        if request.form.get("trainerInput") == "True":
+            trainer = "Trainer"
+        else:
+            trainer = "Trainee"
+        payload = {"timestamp": timestamp,
+                    "engineer": engineer[1][3],
+                    "dateWorked":dateWorked,
+                    "shop": shop,
+                    "hours":hours,
+                    "trainer": trainer,
+                    "comment": comment   
+                    }                              
+        update_csv(crosstrainingLog, payload)
+        
+    return render_template('crosstraining.html', data=data)
 
 @app.route('/administration/', methods=["GET","POST"] )
 def administration():
@@ -254,6 +292,7 @@ if location == "home":
         file = Path(r'C:\Users\sam\webdev\timecheck\template.csv')
         file2 = Path(r'C:\Users\sam\webdev\timecheck\template2.csv')
         controller = Path(r'C:\Users\sam\webdev\timecheck\controller.csv') # column name: Categorys,Projects,Engineers,Team
+        crosstrainingLog = Path(r'C:\Users\sam\webdev\timecheck\crosstrainingLog.csv')
     except:
         print("not home")
         pass
@@ -262,6 +301,8 @@ elif location =="laptop":
         file = file2 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\template2.csv')
         controller = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\controller.csv')
         file3 = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\rigTemplate.csv')
+        crosstrainingLog = Path(r'C:\Users\samsl\OneDrive\Desktop\timeCheck\crosstrainingLog.csv')
+
 
     except:
         print("not on laptop")
@@ -271,6 +312,7 @@ else:
     file = Path(r'X:\Sam Slusky\web\timeCheck\template.csv')
     file2 = Path(r'X:\Sam Slusky\web\timeCheck\template2.csv')
     controller = Path(r'X:\Sam Slusky\web\timeCheck\controller.csv')
+    crosstrainingLog = Path(r'X:\Sam Slusky\web\timeCheck\crosstrainingLog.csv')
 
 full_hours = pd.read_csv(file2)
 
@@ -297,6 +339,12 @@ admin = PYcontroller.task[0]["Admin"]
 rigData = PYcontroller.task[1]["Troubleshooting"]
 ProjectData = PYcontroller.task[2]["project"]
 allData = {"Admin": admin , "Troubleshooting": rigData, "Project":ProjectData}
+
+###FOR CROSSTRAINING###
+shopList = PYcontroller.shopList
+#print("shopList: ", shopList)
+shopCoverage = PYcontroller.shopCoverage
+
 #################################
 
 #######################################

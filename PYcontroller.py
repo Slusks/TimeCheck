@@ -103,7 +103,11 @@ engineers= {
                 "Nate":["Rig", "user", "active", "Nate"],
                 "samsl":["Shop", "admin", "active", "Sam"],
                 "Garrett":["Rig", "user", "active", "Garrett"],
-                "Trevor":["Shop", "user", "active", "Trevor"]},
+                "Trevor":["Shop", "user", "active", "Trevor"],
+                "Drew":["Shop", "user", "active", "Drew"],
+                "Ezekiel":["Shop", "user", "active", "Ezekiel"],
+                "Baha":["Shop", "user", "active", "Baha"],
+                "Evan":["Shop", "user", "active", "Evan"]},
         "work": {
                 "Bill":["Shop", "user", "active", "Bill"],
                 "Nate":["Rig", "user", "active", "Nate"],
@@ -112,3 +116,27 @@ engineers= {
                 "Trevor":["Shop", "user", "active", "Trevor"]}
 }
     
+shopList = [
+    "Actuation",
+    "Landing Gear Structures",
+    "Hoist and Winch",
+    "Cargo",
+    "Lighting",
+    "DeIcing",
+    "Vapor Cycle",
+    "Rotatives",
+    "Starters",
+    "THSA",
+    "HeliServo"
+    "Test Rig and Validation"
+]
+
+shopCoverage ={
+    "Sam":["Actuation", "Landing Gear Structures", "THSA"],
+    "Trevor":["Hoist and Winch", "HeliServo"],
+    "Drew":["Rotatives", "Starters"],
+    "Ezekiel":["Vapor Cycle"],
+    "Baha":["Cargo"],
+    "Evan":["Lighting", "DeIcing"],
+    "Other":["Test Rig and Validation"]
+}

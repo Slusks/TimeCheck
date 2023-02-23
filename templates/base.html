@@ -153,7 +153,10 @@
                     font-weight: bold;
                         }
 
-
+    .containerAutoMargin{
+        margin-left: 3%;
+        margin-right: 3%;
+    }
        
     </style>
 </head>
@@ -164,6 +167,7 @@
     {% block content %} {% endblock %}
 </body>
 <script>
+    var crosstraining = document.querySelector("[name='crosstraining']")
     var formpage = document.querySelector("[name='formpage']")
     var timekeeperpage =document.querySelector("[name='timekeeper']")
     var adminpage =document.querySelector("[name='admin']")

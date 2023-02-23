@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 <nav>
+
+  <a href="/" name='crosstraining' style="color:white; font-weight: bold; text-shadow: 1px 1px  black;">Crosstraining</a>
+  <a href="{{url_for('timekeeper')}}" name='timekeeper' style="color:white">Timekeeper</a>
+  <a href="{{url_for('administration')}}" name='admin' style="color:hsl(353, 85%, 44%); font-weight: bold; text-shadow: 1px 1px  black;" >Administration</a>
+
+  <!--
+  <a href="{{url_for('crosstraining')}}" name='crosstraining' style="color:white; font-weight: bold; text-shadow: 1px 1px  black;">Crosstraining</a>
     <a href="/" name='formpage' style="color:white">Home</a>
     <a href="{{url_for('timekeeper')}}" name='timekeeper' style="color: white">Timekeeper</a>
     <a href="{{url_for('administration')}}" name='admin' style="color:hsl(353, 85%, 44%); font-weight: bold; text-shadow: 1px 1px  black;" >Administration</a>
+  -->
     <span class="nav-right"><img id='logo' src="{{url_for('static', filename='White Logo.png')}}"></span>
   </nav>
   <br>
