@@ -89,14 +89,26 @@
     console.log(engineerName)
     shopName = document.getElementById('shopInput')
     console.log(shopName)
+    
+
     shopInput.addEventListener("change", (event) => {
       if (shopName.value in engineerShops){
         console.log(engineerName, "primary for ", shopName.value)
+        trainerVal = True
+        traineeVal = False
       }
       else {
-        console.log("wtf")
+        trainerVal = False
+        traineeVal = True
       }
-        
+      if (trainerVal == True){
+        var trainer = document.getElementById('trainer').style.color = "red";
+        var trainee = document.getElementById('trainee').style.color = "white";
+      }
+      else {
+        var trainer = document.getElementById('trainer').style.color = "white";
+        var trainee = document.getElementById('trainee').style.color = "red";
+      }
     })
 
 
