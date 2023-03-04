@@ -52,10 +52,10 @@
           <br>
 
           <div style="display:flex;">
-            <input type="radio" id="trainer" name="trainerInput" value=True >
-            <label for="trainer"> Trainer</label>
-            <input type="radio" id="trainee" name="trainerInput" value=False >
-            <label for="trainee"> Trainee</label>
+            <input type="radio" id="trainer" name="trainerInput">
+            <label for="trainer" id="trainer"> Trainer</label>
+            <input type="radio" id="trainee" name="trainerInput">
+            <label for="trainee" id="trainee"> Trainee</label>
           </div>
           
         </div>
@@ -83,34 +83,38 @@
     </div>
     <script>
     
-    var engineerShops = "{{data['shopCoverage'][data['engineer'][1][3]] | safe}}"
+    var engineerShops = {{data['shopCoverage'][data['engineer'][1][3]]|tojson|safe}};
+    console.log(Array.isArray(engineerShops))
     console.log("engineerShops:", engineerShops)
-    var engineerName = "{{[data['engineer'][1][3]] | safe}}"
-    console.log("engineerNAme:", engineerName)
+
+    var engineerName = "{{[data['engineer'][1][3]] | safe }}"
+    console.log("engineerName:", engineerName)
+
     shopName = document.getElementById('shopInput')
-    console.log("shopName", shopName)
-    console.log(engineerShops.type())
+    console.log("shopName", shopName.value)
+
+
+    window.onload = function(){
+      if (engineerShops.includes(shopName.value)){
+        console.log(engineerName, "primary for ", shopName.value)
+        document.getElementById('trainer').checked = true;
+      }
+      else {
+          document.getElementById('trainee').checked = true;
+
+        }
+    }
 
     shopInput.addEventListener("change", (event) => {
-      if (engineerShops.include(shopName)){
+      if (engineerShops.includes(shopName.value)){
         console.log(engineerName, "primary for ", shopName.value)
-        trainerVal = True
-        traineeVal = False
+        document.getElementById('trainer').checked = true;
       }
       else {
-        console.log("Nope")
-        trainerVal = False
-        traineeVal = True
-      }
-      if (trainerVal == True){
-        var trainer = document.getElementById('trainer').style.color = "red";
-        var trainee = document.getElementById('trainee').style.color = "white";
-      }
-      else {
-        var trainer = document.getElementById('trainer').style.color = "white";
-        var trainee = document.getElementById('trainee').style.color = "red";
-      }
-    })
+          document.getElementById('trainee').checked = true;
+        }
+
+      })
 
 
 
