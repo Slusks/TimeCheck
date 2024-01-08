@@ -165,7 +165,8 @@ def administration():
         "shopTeam": control_shop,
         'role': PYcontroller.engineers[location][user][1],
         'rigData': rigData,
-        'allData': allData
+        'allData': allData,
+        'shopCoverage': shopCoverage
     }
     #.get(name)
     if request.method == "POST":
