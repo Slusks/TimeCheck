@@ -61,22 +61,25 @@
         </div>
         </div>
       
-      <div>
+      <div class="container">
         <br>
         <label>Date Worked: </label> 
         <input type="date" name="workedDate" id="workedDate">
         <div>Default: {{data['utc_dt'][0:10]}}</div>
       </div>
+
       <br>
+      <div class="container">
       <label>Hours: </label>
       <input id="hourInput" name="hourInput" type="number" step="0.5" min="0", max="12">
       <br>
       <br>
       <label >Comments: </label>
       <textarea  id="comments" name="commentInput" placeholder="None" style="width:80%;"></textarea>
-    
+      
       <br>
       <button type="submit" style="max-width: 10%; margin-top: 3%;" id="submitButton">Submit</button> <div id="submitMessage" style="visibility:hidden;"> Submitted!!</div>
+      </div>
       </form>
       </div>
       </div>
